@@ -214,9 +214,10 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
           }
         }
 
+        setCopied(true);
+
         // Show anchored toast if tooltip mode is enabled
         if (tooltip) {
-          setCopied(true);
           clipboardToastManager.add({
             description: copiedText,
             positionerProps: {
@@ -229,6 +230,9 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
               setCopied(false);
             },
           });
+        } else {
+          // Reset copied state after delay when no tooltip
+          setTimeout(() => setCopied(false), 1500);
         }
 
         onCopy?.();
