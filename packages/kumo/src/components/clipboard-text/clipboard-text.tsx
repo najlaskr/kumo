@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useEffect, useState } from "react";
 import { Button } from "../button";
 import { inputVariants } from "../input";
 import { cn } from "../../utils/cn";
-import { Tooltip } from "../tooltip";
+import { Popover } from "../popover";
 
 /** ClipboardText size variant definitions mapping sizes to their Tailwind classes. */
 export const KUMO_CLIPBOARD_TEXT_VARIANTS = {
@@ -84,13 +84,13 @@ export interface ClipboardTextProps extends KumoClipboardTextVariantsProps {
   className?: string;
   /** Callback fired after text is copied to clipboard. */
   onCopy?: () => void;
-  /** Tooltip config. Pass `false` to disable. @default false */
-  tooltip?:
-    | false
-    | {
-        content?: string;
-        side?: "top" | "bottom" | "left" | "right";
-      };
+  /** Tooltip config. Pass to enable tooltip on the copy button. */
+  tooltip?: {
+    /** Render function receiving copied state. @example (copied) => copied ? "Copied!" : "Copy" */
+    content: (copied: boolean) => string;
+    /** Tooltip placement. @default "top" */
+    side?: "top" | "bottom" | "left" | "right";
+  };
   /** Accessible labels for i18n. */
   labels?: {
     /** @default "Copy to clipboard" */
@@ -115,7 +115,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
       className,
       size = KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS.size,
       onCopy,
-      tooltip = false,
+      tooltip,
       labels = {},
     },
     ref,
@@ -123,49 +123,54 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
     const [copied, setCopied] = useState(false);
     const sizeConfig = KUMO_CLIPBOARD_TEXT_VARIANTS.size[size];
 
-    const copyToClipboard = useCallback(async () => {
-      try {
-        if (
-          typeof navigator !== "undefined" &&
-          navigator.clipboard &&
-          typeof navigator.clipboard.writeText === "function"
-        ) {
-          await navigator.clipboard.writeText(text);
-          setCopied(true);
-          onCopy?.();
-          return;
-        }
-      } catch {
-        // Fall through to manual fallback
-      }
-
-      if (typeof document !== "undefined") {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.setAttribute("readonly", "");
-        textarea.style.position = "absolute";
-        textarea.style.left = "-9999px";
-        document.body.appendChild(textarea);
-        const selection = document.getSelection();
-        const previousRange = selection?.rangeCount
-          ? selection.getRangeAt(0)
-          : null;
-        textarea.select();
+    const copyToClipboard = useCallback(
+      async (e: React.MouseEvent) => {
+        // Prevent the click from toggling the popover closed
+        e.stopPropagation();
         try {
-          document.execCommand("copy");
-          setCopied(true);
-          onCopy?.();
-        } catch (error) {
-          console.warn("Clipboard copy failed", error);
-        } finally {
-          document.body.removeChild(textarea);
-          if (previousRange) {
-            selection?.removeAllRanges();
-            selection?.addRange(previousRange);
+          if (
+            typeof navigator !== "undefined" &&
+            navigator.clipboard &&
+            typeof navigator.clipboard.writeText === "function"
+          ) {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            onCopy?.();
+            return;
+          }
+        } catch {
+          // Fall through to manual fallback
+        }
+
+        if (typeof document !== "undefined") {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "absolute";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          const selection = document.getSelection();
+          const previousRange = selection?.rangeCount
+            ? selection.getRangeAt(0)
+            : null;
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            setCopied(true);
+            onCopy?.();
+          } catch (error) {
+            console.warn("Clipboard copy failed", error);
+          } finally {
+            document.body.removeChild(textarea);
+            if (previousRange) {
+              selection?.removeAllRanges();
+              selection?.addRange(previousRange);
+            }
           }
         }
-      }
-    }, [text, onCopy]);
+      },
+      [text, onCopy],
+    );
 
     useEffect(() => {
       if (copied) {
@@ -217,15 +222,28 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
         )}
       >
         <span className="grow px-4">{text}</span>
-        {tooltip !== false ? (
-          <Tooltip
-            content={tooltip.content ?? labels.copySuccess ?? "Copied"}
-            side={tooltip.side ?? "bottom"}
-            open={copied}
-            asChild
-          >
-            {copyButton}
-          </Tooltip>
+        {tooltip ? (
+          // Using Popover instead of Tooltip because Tooltip closes on click,
+          // causing flicker when copying. This is a Base UI limitation.
+          // See: https://github.com/mui/base-ui/issues/4113
+          <Popover>
+            <Popover.Trigger
+              openOnHover
+              delay={100}
+              closeDelay={200}
+              render={<div className="inline-flex" />}
+              nativeButton={false}
+            >
+              {copyButton}
+            </Popover.Trigger>
+            <Popover.Content
+              side={tooltip.side ?? "top"}
+              sideOffset={4}
+              className="px-3 py-1.5 text-xs"
+            >
+              {tooltip.content(copied)}
+            </Popover.Content>
+          </Popover>
         ) : (
           copyButton
         )}

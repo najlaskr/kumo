@@ -512,8 +512,8 @@ Read-only text field with a one-click copy-to-clipboard button.
   The text to display and copy to clipboard.
 - `className`: string
   Additional CSS classes merged via `cn()`.
-- `tooltip`: boolean | object
-  Tooltip config. Pass `false` to disable.
+- `tooltip`: object
+  Tooltip config. Pass to enable tooltip on the copy button.
 - `labels`: object
   Accessible labels for i18n.
 
@@ -571,6 +571,16 @@ Read-only text field with a one-click copy-to-clipboard button.
 
 ```tsx
 <ClipboardText text="0c239dd2" />
+```
+
+```tsx
+<ClipboardText
+      text="npx kumo add button"
+      tooltip={{
+        content: (copied) => (copied ? "Copied!" : "Copy"),
+        side: "top",
+      }}
+    />
 ```
 
 

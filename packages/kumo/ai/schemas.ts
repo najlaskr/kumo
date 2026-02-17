@@ -165,7 +165,7 @@ export const ClipboardTextPropsSchema = z.object({
   size: z.enum(["sm", "base", "lg"]).optional(), // Size of the clipboard text field. - `"sm"` — Small clipboard text for compact UIs - `"base"` — Default clipboard text size - `"lg"` — Large clipboard text for prominent display
   text: z.string(), // The text to display and copy to clipboard.
   className: z.string().optional(), // Additional CSS classes merged via `cn()`.
-  tooltip: z.unknown().optional(), // Tooltip config. Pass `false` to disable.
+  tooltip: z.unknown().optional(), // Tooltip config. Pass to enable tooltip on the copy button.
   labels: z.unknown().optional(), // Accessible labels for i18n.
 });
 
