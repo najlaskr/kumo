@@ -32,9 +32,10 @@ export const KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS = {
 
 const clipboardTextAnimations = {
   slide: {
-    initial: "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 translate-y-full",
+    initial:
+      "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 translate-y-full",
     animate: "translate-y-0 opacity-100",
-    end: "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 -translate-y-full"
+    end: "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 -translate-y-full",
   },
 } as const;
 
@@ -84,10 +85,12 @@ export interface ClipboardTextProps extends KumoClipboardTextVariantsProps {
   /** Callback fired after text is copied to clipboard. */
   onCopy?: () => void;
   /** Tooltip config. Pass `false` to disable. @default false */
-  tooltip?: false | {
-    content?: string;
-    side?: "top" | "bottom" | "left" | "right";
-  };
+  tooltip?:
+    | false
+    | {
+        content?: string;
+        side?: "top" | "bottom" | "left" | "right";
+      };
   /** Accessible labels for i18n. */
   labels?: {
     /** @default "Copy to clipboard" */
@@ -179,8 +182,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
         variant="ghost"
         className="rounded-none border-l! border-kumo-line! px-3 relative overflow-hidden transition-all duration-200"
         onClick={copyToClipboard}
-        aria-label={"Copy to clipboard"}
-        aria-pressed={copied}
+        aria-label={labels.copyAction ?? "Copy to clipboard"}
       >
         <span
           className={cn(
@@ -217,7 +219,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
         <span className="grow px-4">{text}</span>
         {tooltip !== false ? (
           <Tooltip
-            content={tooltip.content ?? "Copied"}
+            content={tooltip.content ?? labels.copySuccess ?? "Copied"}
             side={tooltip.side ?? "bottom"}
             open={copied}
             asChild
@@ -228,7 +230,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
           copyButton
         )}
         <span className="sr-only" aria-live="polite">
-          {copied ? "Copied to clipboard" : ""}
+          {copied ? (labels.copySuccess ?? "Copied to clipboard") : ""}
         </span>
       </div>
     );
