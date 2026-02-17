@@ -1,4 +1,4 @@
-import { Eye, EyeSlash } from "@phosphor-icons/react";
+import { CheckIcon, CopyIcon, EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import {
   forwardRef,
   useCallback,
@@ -27,6 +27,12 @@ export const KUMO_SENSITIVE_INPUT_DEFAULT_VARIANTS = {
 } as const;
 
 type Mode = "masked" | "revealed" | "empty";
+
+const slideAnimation = {
+  initial: "absolute inset-0 flex items-center justify-center opacity-0 translate-y-full",
+  animate: "flex items-center justify-center transition-all duration-200 translate-y-0 opacity-100",
+  exit: "absolute inset-0 flex items-center justify-center opacity-0 -translate-y-full",
+} as const;
 
 /**
  * SensitiveInput component props.
@@ -142,10 +148,10 @@ export const SensitiveInput = forwardRef<HTMLInputElement, SensitiveInputProps>(
       [ref],
     );
 
-    // Reset copied state after 2 seconds
+    // Reset copied state after 1.2 seconds
     useEffect(() => {
       if (copied) {
-        const timeoutId = setTimeout(() => setCopied(false), 2000);
+        const timeoutId = setTimeout(() => setCopied(false), 1200);
         return () => clearTimeout(timeoutId);
       }
     }, [copied]);
@@ -404,9 +410,9 @@ export const SensitiveInput = forwardRef<HTMLInputElement, SensitiveInputProps>(
           )}
         >
           {mode === "revealed" ? (
-            <EyeSlash className="size-full" />
+            <EyeSlashIcon className="size-full" />
           ) : (
-            <Eye className="size-full" />
+            <EyeIcon className="size-full" />
           )}
         </button>
 

@@ -34,9 +34,9 @@ const slideBase = "pointer-events-none absolute inset-0 flex items-center justif
 
 const clipboardTextAnimations = {
   slide: {
-    initial: `${slideBase} translate-y-full`,
+    initial: "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 translate-y-full",
     animate: "translate-y-0 opacity-100",
-    end: `${slideBase} -translate-y-full`
+    end: "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 -translate-y-full"
   },
 } as const;
 
@@ -85,8 +85,18 @@ export interface ClipboardTextProps extends KumoClipboardTextVariantsProps {
   className?: string;
   /** Callback fired after text is copied to clipboard. */
   onCopy?: () => void;
-  /** Show tooltip on copy. @default true */
-  showTooltip?: boolean;
+  /** Tooltip config. Pass `false` to disable. @default false */
+  tooltip?: false | {
+    content?: string;
+    side?: "top" | "bottom" | "left" | "right";
+  };
+  /** Accessible labels for i18n. */
+  labels?: {
+    /** @default "Copy to clipboard" */
+    copyAction?: string;
+    /** @default "Copied to clipboard" */
+    copySuccess?: string;
+  };
 }
 
 /**
@@ -104,7 +114,8 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
       className,
       size = KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS.size,
       onCopy,
-      showTooltip = true,
+      tooltip = false,
+      labels = {},
     },
     ref,
   ) => {
@@ -176,9 +187,9 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
       >
         <span className="grow px-4">{text}</span>
         <Tooltip
-          content="Copied"
-          side="bottom"
-          open={showTooltip && copied}
+          content={tooltip !== false ? (tooltip.content ?? "Copied") : ""}
+          side={tooltip !== false ? (tooltip.side ?? "bottom") : "bottom"}
+          open={tooltip !== false && copied}
           asChild
         >
         <Button
@@ -186,7 +197,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
             variant="ghost"
             className="rounded-none border-l! border-kumo-line! px-3 relative overflow-hidden transition-all duration-200"
             onClick={copyToClipboard}
-            aria-label={copied ? "Copied" : "Copy to clipboard"}
+            aria-label="Copy to clipboard"
             aria-pressed={copied}
           >
             <span
