@@ -30,8 +30,6 @@ export const KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS = {
   size: "lg",
 } as const;
 
-const slideBase = "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0";
-
 const clipboardTextAnimations = {
   slide: {
     initial: "pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 translate-y-full",
@@ -171,10 +169,41 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
         const timeoutId = setTimeout(() => {
           setCopied(false);
         }, 1100);
-
         return () => clearTimeout(timeoutId);
       }
     }, [copied]);
+
+    const copyButton = (
+      <Button
+        size={sizeConfig.buttonSize}
+        variant="ghost"
+        className="rounded-none border-l! border-kumo-line! px-3 relative overflow-hidden transition-all duration-200"
+        onClick={copyToClipboard}
+        aria-label={labels.copyAction ?? "Copy to clipboard"}
+        aria-pressed={copied}
+      >
+        <span
+          className={cn(
+            "flex items-center gap-1 transition-all duration-200",
+            copied
+              ? clipboardTextAnimations.slide.animate
+              : clipboardTextAnimations.slide.initial,
+          )}
+        >
+          <CheckIcon />
+        </span>
+        <span
+          className={cn(
+            "flex items-center justify-center transition-all duration-200",
+            copied
+              ? clipboardTextAnimations.slide.end
+              : clipboardTextAnimations.slide.animate,
+          )}
+        >
+          <CopyIcon />
+        </span>
+      </Button>
+    );
 
     return (
       <div
@@ -186,44 +215,20 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
         )}
       >
         <span className="grow px-4">{text}</span>
-        <Tooltip
-          content={tooltip !== false ? (tooltip.content ?? "Copied") : ""}
-          side={tooltip !== false ? (tooltip.side ?? "bottom") : "bottom"}
-          open={tooltip !== false && copied}
-          asChild
-        >
-        <Button
-            size={sizeConfig.buttonSize}
-            variant="ghost"
-            className="rounded-none border-l! border-kumo-line! px-3 relative overflow-hidden transition-all duration-200"
-            onClick={copyToClipboard}
-            aria-label="Copy to clipboard"
-            aria-pressed={copied}
+        {tooltip !== false ? (
+          <Tooltip
+            content={tooltip.content ?? "Copied"}
+            side={tooltip.side ?? "bottom"}
+            open={copied}
+            asChild
           >
-            <span
-              className={cn(
-                "flex items-center gap-1 transition-all duration-200",
-                copied
-                  ? clipboardTextAnimations.slide.animate
-                  : clipboardTextAnimations.slide.initial,
-              )}
-            >
-              <CheckIcon />
-            </span>
-            <span
-              className={cn(
-                "flex items-center justify-center transition-all duration-200",
-                copied
-                  ? clipboardTextAnimations.slide.end
-                  : clipboardTextAnimations.slide.animate,
-              )}
-            >
-              <CopyIcon />
-            </span>
-        </Button>
-        </Tooltip>
+            {copyButton}
+          </Tooltip>
+        ) : (
+          copyButton
+        )}
         <span className="sr-only" aria-live="polite">
-          {copied ? "Copied to clipboard" : ""}
+          {copied ? (labels.copySuccess ?? "Copied to clipboard") : ""}
         </span>
       </div>
     );
