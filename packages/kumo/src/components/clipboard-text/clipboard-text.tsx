@@ -228,7 +228,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
           copyButton
         )}
         <span className="sr-only" aria-live="polite">
-          {copied ? ("Copied to clipboard") : ""}
+          {copied ? "Copied to clipboard" : ""}
         </span>
       </div>
     );
