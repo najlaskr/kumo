@@ -512,8 +512,10 @@ Read-only text field with a one-click copy-to-clipboard button.
   The text to display and copy to clipboard.
 - `className`: string
   Additional CSS classes merged via `cn()`.
-- `showTooltip`: boolean
-  Show tooltip on copy.
+- `tooltip`: boolean | object
+  Tooltip config. Pass `false` to disable.
+- `labels`: object
+  Accessible labels for i18n.
 
 **Colors (kumo tokens used):**
 
@@ -3969,16 +3971,27 @@ ResizeHandle sub-component
         <Table>
           <Table.Header>
             <Table.Row>
-              <Table.CheckHead aria-label="Select all rows" />
+              <Table.CheckHead
+                checked={selectedIds.size === rows.length}
+                indeterminate={
+                  selectedIds.size > 0 && selectedIds.size < rows.length
+                }
+                onValueChange={toggleAll}
+                aria-label="Select all rows"
+              />
               <Table.Head>Subject</Table.Head>
               <Table.Head>From</Table.Head>
               <Table.Head>Date</Table.Head>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {emailData.slice(0, 3).map((row) => (
+            {rows.map((row) => (
               <Table.Row key={row.id}>
-                <Table.CheckCell aria-label={`Select ${row.subject}`} />
+                <Table.CheckCell
+                  checked={selectedIds.has(row.id)}
+                  onValueChange={() => toggleRow(row.id)}
+                  aria-label={`Select ${row.subject}`}
+                />
                 <Table.Cell>{row.subject}</Table.Cell>
                 <Table.Cell>{row.from}</Table.Cell>
                 <Table.Cell>{row.date}</Table.Cell>
@@ -4066,7 +4079,8 @@ ResizeHandle sub-component
       <LayerCard.Primary className="w-full overflow-x-auto p-0">
         <Table layout="fixed">
           <colgroup>
-            <col style={{ width: "40px" }} />
+            <col />{" "}
+            {/* Checkbox column - width handled by Table.CheckHead/CheckCell */}
             <col />
             <col style={{ width: "150px" }} />
             <col style={{ width: "120px" }} />
@@ -4119,14 +4133,30 @@ ResizeHandle sub-component
                   <span className="truncate">{row.date}</span>
                 </Table.Cell>
                 <Table.Cell className="text-right">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    shape="square"
-                    aria-label="More options"
-                  >
-                    <DotsThree weight="bold" size={16} />
-                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenu.Trigger
+                      render={
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          shape="square"
+                          aria-label="More options"
+                        >
+                          <DotsThree weight="bold" size={16} />
+                        </Button>
+                      }
+                    />
+                    <DropdownMenu.Content>
+                      <DropdownMenu.Item icon={Eye}>View</DropdownMenu.Item>
+                      <DropdownMenu.Item icon={PencilSimple}>
+                        Edit
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Separator />
+                      <DropdownMenu.Item icon={Trash} variant="danger">
+                        Delete
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu>
                 </Table.Cell>
               </Table.Row>
             ))}

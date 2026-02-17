@@ -15,3 +15,13 @@ export function ClipboardTextApiKeyDemo() {
 export function ClipboardTextLongDemo() {
   return <ClipboardText text="https://example.com/very/long/url/path" />;
 }
+
+/** With tooltip shown on copy */
+export function ClipboardTextWithTooltipDemo() {
+  return (
+    <ClipboardText
+      text="npx kumo add button"
+      tooltip={{ content: "Copied!", side: "top" }}
+    />
+  );
+}
