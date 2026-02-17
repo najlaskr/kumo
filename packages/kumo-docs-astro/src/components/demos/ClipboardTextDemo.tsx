@@ -16,15 +16,12 @@ export function ClipboardTextLongDemo() {
   return <ClipboardText text="https://example.com/very/long/url/path" />;
 }
 
-/** With tooltip that changes based on copied state */
+/** With tooltip on hover showing "Copy", and anchored toast on click showing "Copied" */
 export function ClipboardTextWithTooltipDemo() {
   return (
     <ClipboardText
       text="npx kumo add button"
-      tooltip={{
-        content: (copied) => (copied ? "Copied!" : "Copy"),
-        side: "top",
-      }}
+      tooltip={{ text: "Copy", copiedText: "Copied!", side: "top" }}
     />
   );
 }

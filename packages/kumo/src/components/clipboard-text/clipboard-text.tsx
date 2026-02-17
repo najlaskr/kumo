@@ -1,9 +1,13 @@
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
-import { forwardRef, useCallback, useEffect, useState } from "react";
+import { forwardRef, useCallback, useRef, useState } from "react";
+import { Toast } from "@base-ui/react/toast";
+import { Tooltip } from "@base-ui/react/tooltip";
 import { Button } from "../button";
 import { inputVariants } from "../input";
 import { cn } from "../../utils/cn";
-import { Popover } from "../popover";
+
+// Create a toast manager for anchored "Copied" toasts
+const clipboardToastManager = Toast.createToastManager();
 
 /** ClipboardText size variant definitions mapping sizes to their Tailwind classes. */
 export const KUMO_CLIPBOARD_TEXT_VARIANTS = {
@@ -84,20 +88,67 @@ export interface ClipboardTextProps extends KumoClipboardTextVariantsProps {
   className?: string;
   /** Callback fired after text is copied to clipboard. */
   onCopy?: () => void;
-  /** Tooltip config. Pass to enable tooltip on the copy button. */
+  /**
+   * Tooltip config. Shows tooltip on hover, anchored toast on click.
+   * @example
+   * ```tsx
+   * <ClipboardText
+   *   text="abc123"
+   *   tooltip={{ text: "Copy", copiedText: "Copied!", side: "top" }}
+   * />
+   * ```
+   */
   tooltip?: {
-    /** Render function receiving copied state. @example (copied) => copied ? "Copied!" : "Copy" */
-    content: (copied: boolean) => string;
-    /** Tooltip placement. @default "top" */
+    /** Text shown in tooltip on hover. @default "Copy" */
+    text?: string;
+    /** Text shown in toast after copying. @default "Copied" */
+    copiedText?: string;
+    /** Tooltip/toast placement. @default "top" */
     side?: "top" | "bottom" | "left" | "right";
   };
   /** Accessible labels for i18n. */
   labels?: {
     /** @default "Copy to clipboard" */
     copyAction?: string;
-    /** @default "Copied to clipboard" */
-    copySuccess?: string;
   };
+}
+
+/**
+ * Anchored toasts viewport - renders "Copied" toasts anchored to buttons
+ */
+function AnchoredToasts() {
+  const { toasts } = Toast.useToastManager();
+  return (
+    <Toast.Viewport className="pointer-events-none fixed inset-0 z-50">
+      {toasts.map((toast) => (
+        <Toast.Positioner key={toast.id} toast={toast} className="absolute">
+          <Toast.Root
+            toast={toast}
+            className={cn(
+              "flex origin-[var(--transform-origin)] flex-col rounded-md bg-kumo-base px-3 py-1.5 text-xs text-kumo-default font-sans",
+              "shadow-lg shadow-kumo-tip-shadow outline outline-kumo-fill",
+            )}
+          >
+            <Toast.Description />
+          </Toast.Root>
+        </Toast.Positioner>
+      ))}
+    </Toast.Viewport>
+  );
+}
+
+/**
+ * Internal wrapper that provides Toast context when tooltip is enabled.
+ */
+function TooltipWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <Tooltip.Provider>
+      <Toast.Provider toastManager={clipboardToastManager}>
+        <AnchoredToasts />
+        {children}
+      </Toast.Provider>
+    </Tooltip.Provider>
+  );
 }
 
 /**
@@ -116,38 +167,31 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
       size = KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS.size,
       onCopy,
       tooltip,
-      labels: {
-        copyAction = "Copy to clipboard",
-        copySuccess = "Copied to clipboard",
-      } = {},
+      labels: { copyAction = "Copy to clipboard" } = {},
     },
     ref,
   ) => {
     const [copied, setCopied] = useState(false);
-    const { content: tooltipContent, side: tooltipSide = "top" } =
-      tooltip ?? {};
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
     const sizeConfig = KUMO_CLIPBOARD_TEXT_VARIANTS.size[size];
 
-    const copyToClipboard = useCallback(
-      async (e: React.MouseEvent) => {
-        // Prevent the click from toggling the popover closed
-        e.stopPropagation();
-        try {
-          if (
-            typeof navigator !== "undefined" &&
-            navigator.clipboard &&
-            typeof navigator.clipboard.writeText === "function"
-          ) {
-            await navigator.clipboard.writeText(text);
-            setCopied(true);
-            onCopy?.();
-            return;
-          }
-        } catch {
-          // Fall through to manual fallback
-        }
+    // Destructure tooltip config with defaults
+    const {
+      text: tooltipText = "Copy",
+      copiedText = "Copied",
+      side: tooltipSide = "top",
+    } = tooltip ?? {};
 
-        if (typeof document !== "undefined") {
+    const copyToClipboard = useCallback(async () => {
+      try {
+        if (
+          typeof navigator !== "undefined" &&
+          navigator.clipboard &&
+          typeof navigator.clipboard.writeText === "function"
+        ) {
+          await navigator.clipboard.writeText(text);
+        } else if (typeof document !== "undefined") {
+          // Fallback for older browsers
           const textarea = document.createElement("textarea");
           textarea.value = text;
           textarea.setAttribute("readonly", "");
@@ -161,10 +205,6 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
           textarea.select();
           try {
             document.execCommand("copy");
-            setCopied(true);
-            onCopy?.();
-          } catch (error) {
-            console.warn("Clipboard copy failed", error);
           } finally {
             document.body.removeChild(textarea);
             if (previousRange) {
@@ -173,21 +213,33 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
             }
           }
         }
-      },
-      [text, onCopy],
-    );
 
-    useEffect(() => {
-      if (copied) {
-        const timeoutId = setTimeout(() => {
-          setCopied(false);
-        }, 1100);
-        return () => clearTimeout(timeoutId);
+        // Show anchored toast if tooltip mode is enabled
+        if (tooltip) {
+          setCopied(true);
+          clipboardToastManager.add({
+            description: copiedText,
+            positionerProps: {
+              anchor: buttonRef.current,
+              side: tooltipSide,
+              sideOffset: 8,
+            },
+            timeout: 1500,
+            onClose() {
+              setCopied(false);
+            },
+          });
+        }
+
+        onCopy?.();
+      } catch (error) {
+        console.warn("Clipboard copy failed", error);
       }
-    }, [copied]);
+    }, [text, onCopy, tooltip, copiedText, tooltipSide]);
 
     const copyButton = (
       <Button
+        ref={buttonRef}
         size={sizeConfig.buttonSize}
         variant="ghost"
         className="rounded-none border-l! border-kumo-line! px-3 relative overflow-hidden transition-all duration-200"
@@ -228,32 +280,36 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
       >
         <span className="grow px-4">{text}</span>
         {tooltip ? (
-          // Using Popover instead of Tooltip because Tooltip closes on click,
-          // causing flicker when copying. This is a Base UI limitation.
-          // See: https://github.com/mui/base-ui/issues/4113
-          <Popover>
-            <Popover.Trigger
-              openOnHover
-              delay={100}
-              closeDelay={200}
-              render={<div className="inline-flex" />}
-              nativeButton={false}
+          <TooltipWrapper>
+            <Tooltip.Root
+              disabled={copied}
+              onOpenChange={(open, eventDetails) => {
+                // Prevent tooltip from closing when button is clicked
+                if (eventDetails.reason === "trigger-press") {
+                  eventDetails.cancel();
+                }
+              }}
             >
-              {copyButton}
-            </Popover.Trigger>
-            <Popover.Content
-              side={tooltipSide}
-              sideOffset={4}
-              className="px-3 py-1.5 text-xs"
-            >
-              {tooltipContent?.(copied)}
-            </Popover.Content>
-          </Popover>
+              <Tooltip.Trigger render={copyButton} />
+              <Tooltip.Portal>
+                <Tooltip.Positioner side={tooltipSide} sideOffset={8}>
+                  <Tooltip.Popup
+                    className={cn(
+                      "flex origin-[var(--transform-origin)] flex-col rounded-md bg-kumo-base px-3 py-1.5 text-xs text-kumo-default",
+                      "shadow-lg shadow-kumo-tip-shadow outline outline-kumo-fill",
+                    )}
+                  >
+                    {tooltipText}
+                  </Tooltip.Popup>
+                </Tooltip.Positioner>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </TooltipWrapper>
         ) : (
           copyButton
         )}
         <span className="sr-only" aria-live="polite">
-          {copied ? copySuccess : ""}
+          {copied ? copiedText : ""}
         </span>
       </div>
     );

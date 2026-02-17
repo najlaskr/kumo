@@ -82,15 +82,12 @@ export default function Example() {
       <div>
         <Heading level={3}>With Tooltip</Heading>
         <p class="mb-3 text-sm text-kumo-subtle">
-          Shows a tooltip that updates based on copied state.
+          Shows "Copy" tooltip on hover, "Copied!" toast on click.
         </p>
         <ComponentExample
           code={`<ClipboardText
   text="npx kumo add button"
-  tooltip={{
-    content: (copied) => copied ? "Copied!" : "Copy",
-    side: "top",
-  }}
+  tooltip={{ text: "Copy", copiedText: "Copied!", side: "top" }}
 />`}
         >
           <ClipboardTextWithTooltipDemo client:visible />
