@@ -179,7 +179,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
         variant="ghost"
         className="rounded-none border-l! border-kumo-line! px-3 relative overflow-hidden transition-all duration-200"
         onClick={copyToClipboard}
-        aria-label={labels.copyAction ?? "Copy to clipboard"}
+        aria-label={"Copy to clipboard"}
         aria-pressed={copied}
       >
         <span
@@ -228,7 +228,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
           copyButton
         )}
         <span className="sr-only" aria-live="polite">
-          {copied ? (labels.copySuccess ?? "Copied to clipboard") : ""}
+          {copied ? ("Copied to clipboard") : ""}
         </span>
       </div>
     );
