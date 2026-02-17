@@ -116,11 +116,16 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
       size = KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS.size,
       onCopy,
       tooltip,
-      labels = {},
+      labels: {
+        copyAction = "Copy to clipboard",
+        copySuccess = "Copied to clipboard",
+      } = {},
     },
     ref,
   ) => {
     const [copied, setCopied] = useState(false);
+    const { content: tooltipContent, side: tooltipSide = "top" } =
+      tooltip ?? {};
     const sizeConfig = KUMO_CLIPBOARD_TEXT_VARIANTS.size[size];
 
     const copyToClipboard = useCallback(
@@ -187,7 +192,7 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
         variant="ghost"
         className="rounded-none border-l! border-kumo-line! px-3 relative overflow-hidden transition-all duration-200"
         onClick={copyToClipboard}
-        aria-label={labels.copyAction ?? "Copy to clipboard"}
+        aria-label={copyAction}
       >
         <span
           className={cn(
@@ -237,18 +242,18 @@ export const ClipboardText = forwardRef<HTMLDivElement, ClipboardTextProps>(
               {copyButton}
             </Popover.Trigger>
             <Popover.Content
-              side={tooltip.side ?? "top"}
+              side={tooltipSide}
               sideOffset={4}
               className="px-3 py-1.5 text-xs"
             >
-              {tooltip.content(copied)}
+              {tooltipContent?.(copied)}
             </Popover.Content>
           </Popover>
         ) : (
           copyButton
         )}
         <span className="sr-only" aria-live="polite">
-          {copied ? (labels.copySuccess ?? "Copied to clipboard") : ""}
+          {copied ? copySuccess : ""}
         </span>
       </div>
     );
