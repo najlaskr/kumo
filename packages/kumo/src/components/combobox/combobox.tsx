@@ -210,7 +210,7 @@ function Content({
           className={cn(
             "flex flex-col", // flexbox layout for sticky input + scrollable list
             "max-h-[min(var(--available-height),24rem)] max-w-(--available-width) min-w-(--anchor-width) py-1.5",
-            "bg-kumo-control text-kumo-default", // background
+            "bg-kumo-base text-kumo-default", // background
             "rounded-lg shadow-lg ring ring-kumo-line", // border part
             className,
           )}
@@ -256,7 +256,7 @@ function TriggerValue({
           iconStyles.iconRight,
         )}
       >
-        <CaretDownIcon size={iconStyles.iconSize} className="fill-kumo-ring" />
+        <CaretDownIcon size={iconStyles.iconSize} />
       </ComboboxBase.Icon>
     </ComboboxBase.Trigger>
   );
@@ -324,7 +324,6 @@ function TriggerInput(props: ComboboxBase.Input.Props) {
         >
           <CaretDownIcon
             size={iconStyles.iconSize}
-            className="fill-kumo-ring"
           />
         </ComboboxBase.Icon>
       </ComboboxBase.Trigger>
@@ -336,7 +335,7 @@ function Item({ children, ...props }: ComboboxBase.Item.Props) {
   return (
     <ComboboxBase.Item
       {...props}
-      className="group mx-1.5 grid cursor-pointer grid-cols-[1fr_16px] gap-2 rounded px-2 py-1.5 text-base data-highlighted:bg-kumo-overlay"
+      className="group mx-1.5 grid cursor-pointer grid-cols-[1fr_16px] gap-2 rounded px-2 py-1.5 text-base data-highlighted:bg-kumo-tint"
     >
       <div className="col-start-1">{children}</div>
       <ComboboxBase.ItemIndicator className="col-start-2 flex items-center">
@@ -411,10 +410,10 @@ function Chip(props: ComboboxBase.Chip.Props) {
   return (
     <ComboboxBase.Chip
       {...props}
-      className="flex items-center gap-1 rounded-md bg-kumo-overlay px-2 py-1"
+      className="flex items-center gap-1 rounded-md bg-kumo-base px-2 py-1"
     >
       {props.children}
-      <ComboboxBase.ChipRemove className="cursor-pointer rounded-md p-1 hover:bg-kumo-fill-hover">
+      <ComboboxBase.ChipRemove className="cursor-pointer rounded-md p-1 hover:bg-kumo-tint">
         <XIcon size={12} weight="bold" />
       </ComboboxBase.ChipRemove>
     </ComboboxBase.Chip>
