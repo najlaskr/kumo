@@ -4149,6 +4149,34 @@ Radio — radio button group for single-select choices.  Compound component: `Ra
 
 `bg-kumo-base`, `bg-kumo-contrast`, `bg-kumo-tint`, `border-kumo-danger`, `border-kumo-interact`, `border-kumo-line`, `border-kumo-ring`, `ring-kumo-danger`, `ring-kumo-line`, `ring-kumo-ring`, `text-kumo-danger`, `text-kumo-default`, `text-kumo-subtle`
 
+**Sub-Components:**
+
+This is a compound component. Use these sub-components:
+
+#### Radio.Item
+
+Item sub-component
+
+#### Radio.Group
+
+Group sub-component
+
+Props:
+- `legend`: string (required)
+- `children`: ReactNode (required)
+- `orientation`: "vertical" | "horizontal"
+- `appearance`: KumoRadioAppearance
+- `error`: string
+- `description`: ReactNode
+- `value`: string
+- `disabled`: boolean
+- `label`: "start" (default) puts radio before label (required)
+- `Note`: In card appearance (required)
+- `controlPosition`: RadioControlPosition
+- `name`: string
+- `className`: string
+
+
 **Examples:**
 
 ```tsx

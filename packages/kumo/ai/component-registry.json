@@ -3920,7 +3920,72 @@
         "text-kumo-danger",
         "text-kumo-default",
         "text-kumo-subtle"
-      ]
+      ],
+      "subComponents": {
+        "Item": {
+          "name": "Item",
+          "description": "Item sub-component",
+          "props": {}
+        },
+        "Group": {
+          "name": "Group",
+          "description": "Group sub-component",
+          "props": {
+            "legend": {
+              "type": "string",
+              "required": true
+            },
+            "children": {
+              "type": "ReactNode",
+              "required": true
+            },
+            "orientation": {
+              "type": "\"vertical\" | \"horizontal\"",
+              "optional": true
+            },
+            "appearance": {
+              "type": "KumoRadioAppearance",
+              "optional": true
+            },
+            "error": {
+              "type": "string",
+              "optional": true
+            },
+            "description": {
+              "type": "ReactNode",
+              "optional": true
+            },
+            "value": {
+              "type": "string",
+              "optional": true
+            },
+            "disabled": {
+              "type": "boolean",
+              "optional": true
+            },
+            "label": {
+              "type": "\"start\" (default) puts radio before label",
+              "required": true
+            },
+            "Note": {
+              "type": "In card appearance",
+              "required": true
+            },
+            "controlPosition": {
+              "type": "RadioControlPosition",
+              "optional": true
+            },
+            "name": {
+              "type": "string",
+              "optional": true
+            },
+            "className": {
+              "type": "string",
+              "optional": true
+            }
+          }
+        }
+      }
     },
     "Select": {
       "name": "Select",
