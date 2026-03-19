@@ -64,8 +64,8 @@ const componentRoutes: Record<string, string> = {
   empty: "/components/empty",
   grid: "/components/grid",
   input: "/components/input",
+  "input-area": "/components/input-area",
   "input-group": "/components/input-group",
-  "input-area": "/components/input",
   label: "/components/label",
   "layer-card": "/components/layer-card",
   loader: "/components/loader",
@@ -107,6 +107,8 @@ export function HomeGrid() {
   const [switchToggled, setSwitchToggled] = useState(true);
   const [checked, setChecked] = useState(true);
   const [collapsibleOpen, setCollapsibleOpen] = useState(false);
+  const [menuBarActive, setMenuBarActive] = useState<number | undefined>(0);
+  const [paginationPage, setPaginationPage] = useState(1);
   const [value, setValue] = useState<{ id: string; value: string } | null>(
     null,
   );
@@ -410,7 +412,12 @@ export function HomeGrid() {
       name: "Pagination",
       id: "pagination",
       Component: (
-        <Pagination page={1} perPage={10} totalCount={100} setPage={() => {}} />
+        <Pagination
+          page={paginationPage}
+          perPage={10}
+          totalCount={100}
+          setPage={setPaginationPage}
+        />
       ),
     },
     {
@@ -432,10 +439,20 @@ export function HomeGrid() {
       id: "menubar",
       Component: (
         <MenuBar
-          isActive={0}
+          isActive={menuBarActive}
           options={[
-            { icon: <TextBolderIcon />, onClick: () => {}, tooltip: "Bold" },
-            { icon: <TextItalicIcon />, onClick: () => {}, tooltip: "Italic" },
+            {
+              icon: <TextBolderIcon />,
+              onClick: () =>
+                setMenuBarActive(menuBarActive === 0 ? undefined : 0),
+              tooltip: "Bold",
+            },
+            {
+              icon: <TextItalicIcon />,
+              onClick: () =>
+                setMenuBarActive(menuBarActive === 1 ? undefined : 1),
+              tooltip: "Italic",
+            },
           ]}
         />
       ),
@@ -596,7 +613,7 @@ export function HomeGrid() {
         const route = componentRoutes[c.id] || null;
         return (
           <li
-            className="relative flex aspect-square items-center justify-center bg-kumo-elevated"
+            className="relative flex aspect-square items-center justify-center bg-kumo-surface"
             key={c.name}
           >
             {route ? (

@@ -50,6 +50,7 @@ const componentItems: NavItem[] = [
   { label: "Flow", href: "/components/flow" },
   { label: "Grid", href: "/components/grid" },
   { label: "Input", href: "/components/input" },
+  { label: "InputArea", href: "/components/input-area" },
   { label: "InputGroup", href: "/components/input-group" },
   { label: "Label", href: "/components/label" },
   { label: "Layer Card", href: "/components/layer-card" },
