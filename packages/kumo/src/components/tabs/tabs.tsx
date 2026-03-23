@@ -157,7 +157,8 @@ export function Tabs({
         activateOnFocus={activateOnFocus}
         className={cn(
           "scrollbar-hide relative flex min-w-0 shrink items-stretch",
-          isSegmented && "h-8.5 rounded-lg bg-kumo-recessed px-px",
+          isSegmented &&
+            "h-8.5 rounded-lg bg-kumo-surface ring-[0.4px] ring-kumo-ring p-0",
           isUnderline && "h-7 gap-4 border-b border-kumo-ring pb-2",
           listClassName,
         )}
@@ -170,7 +171,7 @@ export function Tabs({
             className={cn(
               "relative z-2 flex cursor-pointer items-center rounded bg-transparent text-base whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-kumo-ring",
               isSegmented &&
-                "my-px rounded-lg px-2.5 text-kumo-strong hover:text-kumo-default aria-selected:text-kumo-default focus-visible:ring-inset",
+                "rounded-lg px-2.5 text-kumo-strong hover:text-kumo-default aria-selected:text-kumo-default focus-visible:ring-inset",
               isUnderline &&
                 "px-2 py-2.5 text-kumo-strong hover:bg-kumo-tint hover:text-kumo-subtle aria-selected:hover:bg-kumo-tint aria-selected:font-medium aria-selected:text-kumo-default",
               tab.className,
@@ -185,7 +186,7 @@ export function Tabs({
             "data-[rendered=false]:scale-90 data-[rendered=false]:opacity-0",
             "left-(--active-tab-left) w-(--active-tab-width)",
             isSegmented &&
-              "top-(--active-tab-top) h-(--active-tab-height) rounded-lg bg-kumo-base shadow-sm ring ring-kumo-ring",
+              "top-(--active-tab-top) h-(--active-tab-height) rounded-lg bg-kumo-overlay shadow-sm ring ring-kumo-ring",
             isUnderline && "bottom-0 h-0.5 bg-kumo-brand",
             indicatorClassName,
           )}

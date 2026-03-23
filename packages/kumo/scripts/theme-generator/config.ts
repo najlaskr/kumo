@@ -121,19 +121,18 @@ export const THEME_CONFIG: ThemeConfig = {
       },
     },
   },
-
   /**
    * Color tokens
    * Used with: bg-{token}, border-{token}, ring-{token}, etc.
    * CSS variable: --color-{token}
    */
   color: {
-    "kumo-surface": {
+    "kumo-canvas": {
       newName: "",
       theme: {
         kumo: {
           light: "var(--color-kumo-neutral-25, oklch(99% 0 0))",
-          dark: "var(--color-kumo-neutral-975, oklch(8.5% 0 0))",
+          dark: "var(--color-kumo-neutral-1000, oklch(5% 0 0))",
         },
         fedramp: {
           light: "#5b697c",
@@ -146,7 +145,7 @@ export const THEME_CONFIG: ThemeConfig = {
       theme: {
         kumo: {
           light: "var(--color-kumo-neutral-50, oklch(97.5% 0 0))",
-          dark: "var(--color-kumo-neutral-925, oklch(18% 0 0))",
+          dark: "var(--color-kumo-neutral-975, oklch(12% 0 0))",
         },
       },
     },
@@ -154,8 +153,8 @@ export const THEME_CONFIG: ThemeConfig = {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-white, #fff)",
-          dark: "var(--color-kumo-neutral-850, oklch(22.4% 0 0))",
+          light: "var(--color-kumo-neutral-75, oklch(96.7% 0 0))",
+          dark: "var(--color-kumo-neutral-925, oklch(18% 0 0))",
         },
         fedramp: {
           light: "#5b697c",
@@ -163,7 +162,16 @@ export const THEME_CONFIG: ThemeConfig = {
         },
       },
     },
-    "kumo-tint": {
+    "kumo-overlay": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-white, #fff)",
+          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
+        },
+      },
+    },
+    "kumo-hover": {
       newName: "",
       theme: {
         kumo: {
@@ -181,91 +189,6 @@ export const THEME_CONFIG: ThemeConfig = {
         },
       },
     },
-    /**
-     * TO DEPRECIATE
-     * In an effort to reduce the amount of greyscale tokens used in Kumo & Stratus, these tokens will be replaced and depreciated
-     */
-    "kumo-elevated": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-kumo-neutral-25, oklch(98.5% 0 0))",
-          dark: "var(--color-neutral-950, oklch(14.5% 0 0))",
-        },
-      },
-    },
-    "kumo-overlay": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-kumo-neutral-50, oklch(97.5% 0 0))",
-          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
-        },
-      },
-    },
-    "kumo-control": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-white, #fff)",
-          dark: "var(--color-neutral-900, oklch(21% 0.006 285.885))",
-        },
-      },
-    },
-    "kumo-interact": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-neutral-300, oklch(87% 0 0))",
-          dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
-        },
-      },
-    },
-    "kumo-fill": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-neutral-200, oklch(92.2% 0 0))",
-          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
-        },
-      },
-    },
-    "kumo-fill-hover": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-neutral-200, oklch(92.2% 0 0))",
-          dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
-        },
-      },
-    },
-    "kumo-brand": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "oklch(0.5772 0.2324 260)",
-          dark: "oklch(0.5772 0.2324 260)",
-        },
-      },
-    },
-    "kumo-brand-hover": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-blue-700, oklch(48.8% 0.243 264.376))",
-          dark: "var(--color-blue-700, oklch(48.8% 0.243 264.376))",
-        },
-      },
-    },
-    "kumo-line": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "oklch(14.5% 0 0 / 0.1)",
-          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
-        },
-      },
-    },
     "kumo-ring": {
       newName: "",
       theme: {
@@ -276,24 +199,6 @@ export const THEME_CONFIG: ThemeConfig = {
         fedramp: {
           light: "#c8d4e5",
           dark: "#c8d4e5",
-        },
-      },
-    },
-    "kumo-tip-shadow": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-gray-200, oklch(92.8% 0.006 264.531))",
-          dark: "transparent",
-        },
-      },
-    },
-    "kumo-tip-stroke": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "transparent",
-          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
         },
       },
     },
@@ -369,8 +274,102 @@ export const THEME_CONFIG: ThemeConfig = {
         },
       },
     },
+  /**
+   * TOKENS TO DEPRECATE
+   * The following grayscale tokens in this section are all planned for deprecation
+   * and replacement to reduce token surface area across Kumo and Stratus.
+   */
+    "kumo-elevated": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-kumo-neutral-25, oklch(98.5% 0 0))",
+          dark: "var(--color-neutral-950, oklch(14.5% 0 0))",
+        },
+      },
+    },
+    "kumo-control": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-white, #fff)",
+          dark: "var(--color-neutral-900, oklch(21% 0.006 285.885))",
+        },
+      },
+    },
+    "kumo-interact": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-neutral-300, oklch(87% 0 0))",
+          dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
+        },
+      },
+    },
+    "kumo-fill": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-neutral-200, oklch(92.2% 0 0))",
+          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
+        },
+      },
+    },
+    "kumo-fill-hover": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-neutral-200, oklch(92.2% 0 0))",
+          dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
+        },
+      },
+    },
+    "kumo-brand": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "oklch(0.5772 0.2324 260)",
+          dark: "oklch(0.5772 0.2324 260)",
+        },
+      },
+    },
+    "kumo-brand-hover": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-blue-700, oklch(48.8% 0.243 264.376))",
+          dark: "var(--color-blue-700, oklch(48.8% 0.243 264.376))",
+        },
+      },
+    },
+    "kumo-line": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "oklch(14.5% 0 0 / 0.1)",
+          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
+        },
+      },
+    },
+    "kumo-tip-shadow": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-gray-200, oklch(92.8% 0.006 264.531))",
+          dark: "transparent",
+        },
+      },
+    },
+    "kumo-tip-stroke": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "transparent",
+          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
+        },
+      },
+    },
   },
-
   /**
    * Typography tokens
    * Used with: text-{size} utilities
