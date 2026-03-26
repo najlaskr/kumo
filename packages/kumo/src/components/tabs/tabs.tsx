@@ -151,13 +151,13 @@ export function Tabs({
     >
       {/* Background element for segmented variant */}
       {isSegmented && (
-        <div className="absolute inset-x-0 top-1/2 z-0 h-8.5 -translate-y-1/2 rounded-lg bg-kumo-recessed ring-[0.75px] ring-kumo-ring/50" />
+        <div className="absolute inset-x-0 top-1/2 z-0 h-8.5 -translate-y-1/2 rounded-lg bg-kumo-base-neg-2 ring-[0.75px] ring-kumo-ring/50" />
       )}
       <TabsPrimitive.List
         activateOnFocus={activateOnFocus}
         className={cn(
           "scrollbar-hide relative flex min-w-0 shrink items-stretch",
-          isSegmented && "h-8 rounded-lg bg-kumo-recessed p-0",
+          isSegmented && "h-8 rounded-lg bg-kumo-base-neg-2 dark:bg-kumo-base p-0",
           isUnderline && "h-7 gap-4 border-b border-kumo-ring pb-2",
           listClassName,
         )}
@@ -172,7 +172,7 @@ export function Tabs({
               isSegmented &&
                 "rounded-lg px-2.5 text-kumo-strong hover:text-kumo-default aria-selected:text-kumo-default",
               isUnderline &&
-                "px-2 py-2.5 text-kumo-strong hover:bg-kumo-tint hover:text-kumo-subtle aria-selected:hover:bg-kumo-tint aria-selected:font-medium aria-selected:text-kumo-default",
+                "px-2 py-2.5 text-kumo-strong hover:bg-kumo-base-1 hover:text-kumo-subtle aria-selected:hover:bg-kumo-base-1 aria-selected:font-medium aria-selected:text-kumo-default",
               tab.className,
             )}
           >
@@ -185,7 +185,7 @@ export function Tabs({
             "data-[rendered=false]:scale-90 data-[rendered=false]:opacity-0",
             "left-(--active-tab-left) w-(--active-tab-width)",
             isSegmented &&
-              "top-[calc(var(--active-tab-top)-1px)] h-[calc(var(--active-tab-height)+2px)] rounded-lg bg-kumo-base shadow-sm ring-[0.5px] ring-kumo-ring",
+              "top-[calc(var(--active-tab-top)-1px)] h-[calc(var(--active-tab-height)+2px)] rounded-lg bg-kumo-base dark:bg-kumo-base-1 shadow-sm ring-[0.5px] ring-kumo-ring",
             isUnderline && "bottom-0 h-0.5 bg-kumo-brand",
             indicatorClassName,
           )}

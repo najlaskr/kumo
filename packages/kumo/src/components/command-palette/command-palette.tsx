@@ -336,7 +336,7 @@ function Item<T>({
       onClick={onClick}
       className={cn(
         "group flex w-full items-center gap-3 px-2 py-1.5 text-left text-base transition-colors",
-        "cursor-pointer data-[highlighted]:bg-kumo-overlay",
+        "cursor-pointer data-[highlighted]:bg-kumo-base-1",
         "rounded-lg",
         disabled && "cursor-default opacity-50",
         className,
@@ -383,7 +383,7 @@ function Loading({ children }: CommandPaletteLoadingProps) {
  */
 function Footer({ children }: CommandPaletteFooterProps) {
   return (
-    <div className="flex items-center justify-between rounded-b-lg bg-kumo-elevated px-4 py-3 text-xs text-kumo-strong">
+    <div className="flex items-center justify-between rounded-b-lg bg-kumo-base-1 px-4 py-3 text-xs text-kumo-strong">
       {children}
     </div>
   );
@@ -479,7 +479,7 @@ function ResultItem<T>({
         "group flex w-full items-center gap-3 rounded-lg px-2 py-1.5 text-left transition-colors",
         nonInteractive
           ? "cursor-default"
-          : "cursor-pointer data-[highlighted]:bg-kumo-overlay",
+          : "cursor-pointer data-[highlighted]:bg-kumo-base-1",
       )}
     >
       {icon && (
@@ -540,7 +540,7 @@ function Container({
   return (
     <div
       className={cn(
-        "flex max-h-[60vh] flex-col overflow-hidden rounded-lg bg-kumo-elevated",
+        "flex max-h-[60vh] flex-col overflow-hidden rounded-lg bg-kumo-base-neg-1",
         className,
       )}
     >

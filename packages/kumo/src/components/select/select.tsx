@@ -370,7 +370,7 @@ function Option<T>({ children, value }: OptionProps<T>) {
   return (
     <SelectBase.Item
       value={value}
-      className="group flex cursor-pointer items-center justify-between gap-2 rounded px-2 py-1.5 text-base data-highlighted:bg-kumo-tint"
+      className="group flex cursor-pointer items-center justify-between gap-2 rounded px-2 py-1.5 text-base data-highlighted:bg-kumo-base-1"
     >
       <SelectBase.ItemText>{children}</SelectBase.ItemText>
       <SelectBase.ItemIndicator>

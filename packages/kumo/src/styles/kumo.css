@@ -102,7 +102,7 @@
   --rdp-day-color-subtle: oklch(55.6% 0 0);
   --rdp-nav-bg: transparent;
   --rdp-nav-border: oklch(14.5% 0 0 / 0.1);
-  --rdp-hover-bg: oklch(90% 0 0);
+  --rdp-hover-bg: var(--color-kumo-base-2, oklch(95% 0 0));
   --rdp-fill-hover-bg: oklch(87% 0 0);
   --rdp-focus-ring: oklch(75% 0 0);
 
@@ -125,7 +125,7 @@
   --rdp-day-color-subtle: oklch(70% 0 0);
   --rdp-nav-bg: transparent;
   --rdp-nav-border: oklch(26.9% 0 0);
-  --rdp-hover-bg: oklch(20% 0 0);
+  --rdp-hover-bg: var(--color-kumo-base-2, oklch(37.1% 0 0));
   --rdp-fill-hover-bg: oklch(25% 0 0);
   --rdp-focus-ring: oklch(45% 0 0);
 }

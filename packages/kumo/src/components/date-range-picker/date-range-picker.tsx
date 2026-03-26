@@ -39,7 +39,7 @@ export const KUMO_DATE_RANGE_PICKER_VARIANTS = {
   },
   variant: {
     default: {
-      classes: "bg-kumo-overlay",
+      classes: "bg-kumo-base-neg-1",
       description: "Default calendar appearance",
     },
     subtle: {
@@ -274,7 +274,7 @@ export function DateRangePicker({
           <button
             type="button"
             aria-label="Previous month"
-            className="absolute top-0 left-0 cursor-pointer rounded bg-kumo-interact/85 p-1.5 hover:bg-kumo-interact"
+            className="absolute top-0 left-0 cursor-pointer rounded bg-kumo-base-1/85 p-1.5 hover:bg-kumo-base-2"
             onClick={() => adjustMonth(-1)}
           >
             <CaretLeftIcon size={sizeConfig.iconSize} />
@@ -375,7 +375,7 @@ export function DateRangePicker({
           <button
             type="button"
             aria-label="Next month"
-            className="absolute top-0 right-0 cursor-pointer rounded bg-kumo-interact/85 p-1.5 hover:bg-kumo-interact"
+            className="absolute top-0 right-0 cursor-pointer rounded bg-kumo-base-1/85 p-1.5 hover:bg-kumo-base-2"
             onClick={() => adjustMonth(1)}
           >
             <CaretRightIcon size={sizeConfig.iconSize} />
@@ -518,7 +518,7 @@ function DateRangeDayCell({
       case DateRangeCellMode.SELECTED_END_NODE:
         return "!bg-kumo-contrast rounded-tr-[5px] rounded-br-[5px]";
       case DateRangeCellMode.SELECTED:
-        return "bg-kumo-interact";
+        return "bg-kumo-base-1";
       case DateRangeCellMode.SELECTED_OUT_OF_RANGE:
         return "bg-kumo-fill";
     }
@@ -569,7 +569,7 @@ function DateRangeDayCell({
         `leading-[${sizeConfig.cellHeight.replace("h-[", "").replace("]", "")}]`,
         mode !== DateRangeCellMode.OUT_OF_RANGE &&
           mode !== DateRangeCellMode.SELECTED_OUT_OF_RANGE
-          ? "hover:bg-kumo-interact"
+          ? "hover:bg-kumo-base-1"
           : "",
         getBackgroundColor(),
         getTextColor(),

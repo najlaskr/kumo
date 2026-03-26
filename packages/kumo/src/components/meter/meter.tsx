@@ -88,7 +88,7 @@ export function Meter({
       </div>
       <BaseMeter.Track
         className={cn(
-          "relative h-2 w-full overflow-hidden rounded-full bg-kumo-fill",
+          "relative h-2 w-full overflow-hidden rounded-full bg-kumo-base-2",
           trackClassName,
         )}
       >

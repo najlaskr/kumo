@@ -83,7 +83,7 @@ export const Surface = forwardRef<HTMLDivElement, SurfaceProps>(
   ) {
     const defaultProps: useRender.ElementProps<"div"> = {
       className: cn(
-        "bg-kumo-base shadow-xs ring ring-kumo-line",
+        "bg-kumo-base shadow-xs ring ring-kumo-ring",
         KUMO_SURFACE_VARIANTS.color[color].classes,
       ),
     };

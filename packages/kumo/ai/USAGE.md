@@ -26,9 +26,10 @@ import { Button, Input, Dialog } from "@cloudflare/kumo";
 ## Critical Rules
 
 1. **Semantic tokens only** — use `bg-kumo-base`, `text-kumo-default`, etc. Never use raw Tailwind colors (`bg-blue-500`).
-2. **No `dark:` variant** — light/dark mode is handled automatically via CSS `light-dark()`. Never add `dark:` prefixes.
-3. **Merge classes with `cn()`** — import from `@cloudflare/kumo` and use it to combine class names.
-4. **Compound components** — many components use a dot-notation API: `<Dialog.Root>`, `<Dialog.Trigger>`, etc.
+2. **Merge classes with `cn()`** — import from `@cloudflare/kumo` and use it to combine class names.
+3. **Compound components** — many components use a dot-notation API: `<Dialog.Root>`, `<Dialog.Trigger>`, etc.
+
+`dark:` variants are supported in a few components that require different elevation levels between light and dark modes, however using the same variant is highly recommended.
 
 ## Component Quick Reference
 
@@ -87,17 +88,20 @@ import { Button, Input, Dialog } from "@cloudflare/kumo";
 | `text-kumo-brand` | Brand-colored text |
 
 ### Background Colors
+Background colors are determined by elevation levels in relative to the base surface.
+
 | Token | Purpose |
 |-------|---------|
-| `bg-kumo-base` | Page/card background |
-| `bg-kumo-elevated` | Slightly elevated surface |
-| `bg-kumo-overlay` | Overlay/hover background |
+| `bg-kumo-canvas` | Page background |
+| `bg-kumo-base` | Component background |
+| `bg-kumo-elevated` | Slightly elevated surface (legacy; to be replaced with `bg-kumo-base-1` or `bg-kumo-base-2`) |
+| `bg-kumo-overlay` | Overlay background (i.e. for `Combobox` or `Dialog`) |
 | `bg-kumo-contrast` | High-contrast background (inverted) |
-| `bg-kumo-control` | Form control background |
-| `bg-kumo-fill` | Muted fill (borders, badges) |
-| `bg-kumo-fill-hover` | Hover state for fills |
-| `bg-kumo-tint` | Subtle tinted background |
-| `bg-kumo-interact` | Interactive element background |
+| `bg-kumo-ring` | Ring colour |
+| `bg-kumo-control` | Form control background (legacy; to be replaced with `bg-kumo-base`) |
+| `bg-kumo-fill` | Muted fill (borders, badges) (legacy; to be replaced with `bg-kumo-base`) |
+| `bg-kumo-fill-hover` | Hover state for fills (legacy; to be replaced with `bg-kumo-base-1`) |
+| `bg-kumo-tint` | Subtle tinted background (legacy; to be replaced with `bg-kumo-base-1`) ||
 | `bg-kumo-brand` | Brand primary background |
 | `bg-kumo-brand-hover` | Brand hover background |
 | `bg-kumo-danger` | Error/destructive background |

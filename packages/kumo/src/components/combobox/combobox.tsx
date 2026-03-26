@@ -333,7 +333,7 @@ function Item({ children, ...props }: ComboboxBase.Item.Props) {
   return (
     <ComboboxBase.Item
       {...props}
-      className="group mx-1.5 grid cursor-pointer grid-cols-[1fr_16px] gap-2 rounded px-2 py-1.5 text-base data-highlighted:bg-kumo-tint"
+      className="group mx-1.5 grid cursor-pointer grid-cols-[1fr_16px] gap-2 rounded px-2 py-1.5 text-base data-highlighted:bg-kumo-base-1"
     >
       <div className="col-start-1">{children}</div>
       <ComboboxBase.ItemIndicator className="col-start-2 flex items-center">
@@ -412,14 +412,14 @@ function Chip(props: ComboboxBase.Chip.Props) {
         "flex items-center gap-2.5", // Layout
         "h-6 pl-2 pr-[3px]", // Dimensions
         "rounded-sm ring-1 ring-kumo-line", // Border
-        "bg-kumo-overlay", // Background
+        "bg-kumo-base", // Background
         "text-sm", // Typography
       )}
     >
       {props.children}
       <ComboboxBase.ChipRemove
         className={cn(
-          "cursor-pointer rounded-md p-1 hover:bg-kumo-fill-hover",
+          "cursor-pointer rounded-md p-1 hover:bg-kumo-base-1",
           "bg-transparent flex",
         )}
       >
