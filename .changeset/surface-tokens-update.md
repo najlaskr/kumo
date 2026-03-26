@@ -6,4 +6,4 @@ Adjust semantic color tokens and generated theme output for Kumo surfaces and ne
 
 Specific token updates:
 - `bg-kumo-recessed` is updated to `bg-kumo-base-neg-1` and `bg-kumo-base-neg-2`
-- `bg-kumo-elevated` and `bg-kumo-overlay` are updated to `bg-kumo-base-1` and `bg-kumo-base-2`
+- `bg-kumo-elevated` is updated to `bg-kumo-base-1` and `bg-kumo-base-2`
