@@ -53,7 +53,7 @@ export const THEME_CONFIG: ThemeConfig = {
       theme: {
         kumo: {
           light: "var(--color-neutral-500, oklch(55.6% 0 0))",
-          dark: "var(--color-kumo-neutral-50, oklch(97.5% 0 0))",
+          dark: "var(--color-kumo-neutral-75, oklch(97.5% 0 0))",
         },
       },
     },
@@ -128,12 +128,12 @@ export const THEME_CONFIG: ThemeConfig = {
    * CSS variable: --color-{token}
    */
   color: {
-    "kumo-surface": {
+    "kumo-canvas": {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-kumo-neutral-25, oklch(99% 0 0))",
-          dark: "var(--color-kumo-neutral-975, oklch(8.5% 0 0))",
+          light: "var(--color-kumo-neutral-25, oklch(99.5% 0 0))",
+          dark: "var(--color-kumo-neutral-1000, oklch(10% 0 0))",
         },
         fedramp: {
           light: "#5b697c",
@@ -141,12 +141,49 @@ export const THEME_CONFIG: ThemeConfig = {
         },
       },
     },
+    // to be replaced with kumo-canvas
+    "kumo-surface": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-kumo-neutral-50, oklch(98.5% 0 0))",
+          dark: "var(--color-kumo-neutral-950, oklch(10% 0 0))",
+        },
+        fedramp: {
+          light: "#5b697c",
+          dark: "#5b697c",
+        },
+      },
+    },
+    "kumo-base-neg-2": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-neutral-75, oklch(97.5% 0 0))",
+          dark: "var(--color-kumo-neutral-975, oklch(12% 0 0))",
+        },
+      },
+    },
+    // to be replaced with kumo-base--2
     "kumo-recessed": {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-kumo-neutral-50, oklch(96.5% 0 0))",
-          dark: "var(--color-kumo-neutral-925, oklch(18% 0 0))",
+          light: "var(--color-neutral-50, oklch(97% 0 0))",
+          dark: "var(--color-kumo-neutral-950, oklch(10% 0 0))",
+        },
+      },
+    },
+    "kumo-base-neg-1": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-neutral-50, oklch(98.5% 0 0))",
+          dark: "var(--color-kumo-neutral-950, oklch(15% 0 0))",
+        },
+        fedramp: {
+          light: "#5b697c",
+          dark: "#5b697c",
         },
       },
     },
@@ -155,20 +192,54 @@ export const THEME_CONFIG: ThemeConfig = {
       theme: {
         kumo: {
           light: "var(--color-white, #fff)",
-          dark: "var(--color-kumo-neutral-850, oklch(22.4% 0 0))",
-        },
-        fedramp: {
-          light: "#5b697c",
-          dark: "#5b697c",
+          dark: "var(--color-kumo-neutral-925, oklch(17% 0 0))",
         },
       },
     },
+    // to be replaced with kumo-base-1
     "kumo-tint": {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-kumo-neutral-75, oklch(96.7% 0 0))",
+          light: "var(--color-neutral-100, oklch(97% 0 0))",
           dark: "var(--color-kumo-neutral-800, oklch(26.9% 0 0))",
+        },
+      },
+    },
+    "kumo-base-1": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-neutral-100, oklch(97% 0 0))",
+          dark: "var(--color-kumo-neutral-850, oklch(24% 0 0))",
+        },
+      },
+    },
+    "kumo-base-2": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-kumo-neutral-150, oklch(95% 0 0))",
+          dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
+        },
+      },
+    },
+    "kumo-base-overlay": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-kumo-neutral-450, oklch(89% 0 0))",
+          dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
+        },
+      },
+    },
+    // to be replaced with kumo-base-overlay
+    "kumo-overlay": {
+      newName: "",
+      theme: {
+        kumo: {
+          light: "var(--color-kumo-neutral-75, oklch(97.5% 0 0))",
+          dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
         },
       },
     },
@@ -191,15 +262,6 @@ export const THEME_CONFIG: ThemeConfig = {
         kumo: {
           light: "var(--color-kumo-neutral-25, oklch(98.5% 0 0))",
           dark: "var(--color-neutral-950, oklch(14.5% 0 0))",
-        },
-      },
-    },
-    "kumo-overlay": {
-      newName: "",
-      theme: {
-        kumo: {
-          light: "var(--color-kumo-neutral-50, oklch(97.5% 0 0))",
-          dark: "var(--color-neutral-800, oklch(26.9% 0 0))",
         },
       },
     },
@@ -270,7 +332,7 @@ export const THEME_CONFIG: ThemeConfig = {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-kumo-neutral-150, oklch(93.5% 0 0))",
+          light: "var(--color-kumo-neutral-150, oklch(95% 0 0))",
           dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
         },
         fedramp: {
