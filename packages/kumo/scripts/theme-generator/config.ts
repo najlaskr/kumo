@@ -132,7 +132,7 @@ export const THEME_CONFIG: ThemeConfig = {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-kumo-neutral-25, oklch(99.5% 0 0))",
+          light: "var(--color-kumo-neutral-25, oklch(98.5% 0 0))",
           dark: "var(--color-kumo-neutral-1000, oklch(10% 0 0))",
         },
         fedramp: {
@@ -159,7 +159,7 @@ export const THEME_CONFIG: ThemeConfig = {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-neutral-75, oklch(97% 0 0))",
+          light: "var(--color-neutral-125, oklch(96.5% 0 0))",
           dark: "var(--color-kumo-neutral-975, oklch(12% 0 0))",
         },
       },
@@ -219,7 +219,7 @@ export const THEME_CONFIG: ThemeConfig = {
       newName: "",
       theme: {
         kumo: {
-          light: "var(--color-kumo-neutral-125, oklch(96% 0 0))",
+          light: "var(--color-kumo-neutral-125, oklch(95% 0 0))",
           dark: "var(--color-neutral-700, oklch(37.1% 0 0))",
         },
       },
