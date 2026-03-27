@@ -100,8 +100,8 @@ declare const __BUILD_COMMIT__: string;
 declare const __BUILD_DATE__: string;
 
 const LI_STYLE =
-  "block rounded-lg text-kumo-strong hover:text-kumo-default hover:bg-kumo-tint p-2 my-[.05rem] cursor-pointer transition-colors no-underline relative z-10";
-const LI_ACTIVE_STYLE = "font-semibold text-kumo-default bg-kumo-tint";
+  "block rounded-lg text-kumo-strong hover:text-kumo-default hover:bg-kumo-fill-hover p-2 my-[.05rem] cursor-pointer transition-colors no-underline relative z-10";
+const LI_ACTIVE_STYLE = "font-semibold text-kumo-default bg-kumo-fill-hover";
 
 interface SidebarNavProps {
   currentPath: string;
@@ -220,7 +220,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
         {/* Components Section */}
         <button
           type="button"
-          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-tint"
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-fill-hover"
           onClick={() => setComponentsOpen(!componentsOpen)}
         >
           <span>Components</span>
@@ -259,7 +259,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
       <div className="mb-4">
         <button
           type="button"
-          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-tint"
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-fill-hover"
           onClick={() => setChartsOpen(!chartsOpen)}
         >
           <span>Charts</span>
@@ -298,7 +298,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
         {/* Blocks Section */}
         <button
           type="button"
-          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-tint"
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-fill-hover"
           onClick={() => setBlocksOpen(!blocksOpen)}
         >
           <span>Blocks</span>
@@ -341,7 +341,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
       {/* Mobile header bar with hamburger */}
       <div
         className={cn(
-          "fixed inset-x-0 top-0 z-50 flex h-12 items-center justify-between border-b border-kumo-line bg-kumo-elevated px-3 md:hidden",
+          "fixed inset-x-0 top-0 z-50 flex h-12 items-center justify-between border-b border-kumo-line bg-kumo-canvas px-3 md:hidden",
         )}
       >
         <Button
@@ -359,7 +359,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
       {/* Mobile slide-out drawer */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-kumo-line bg-kumo-elevated md:hidden",
+          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-kumo-line bg-kumo-canvas md:hidden",
           "transition-transform duration-300 will-change-transform",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full",
         )}
@@ -388,7 +388,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
       {/* Desktop: Left rail that always stays put */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-50 hidden w-12 bg-kumo-elevated md:block",
+          "fixed inset-y-0 left-0 z-50 hidden w-12 bg-kumo-canvas ated md:block",
           "border-r border-kumo-line",
         )}
       >
@@ -416,7 +416,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
       <aside
         data-sidebar-open={sidebarOpen}
         className={cn(
-          "fixed inset-y-0 left-12 z-40 hidden w-64 flex-col bg-kumo-elevated md:flex",
+          "fixed inset-y-0 left-12 z-40 hidden w-64 flex-col bg-kumo-canvas md:flex",
           "transition-transform duration-300 ease-out will-change-transform",
           sidebarOpen
             ? "translate-x-0 border-r border-kumo-line"
