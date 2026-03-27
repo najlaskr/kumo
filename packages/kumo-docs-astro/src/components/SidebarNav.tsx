@@ -100,8 +100,8 @@ declare const __BUILD_COMMIT__: string;
 declare const __BUILD_DATE__: string;
 
 const LI_STYLE =
-  "block rounded-lg text-kumo-strong hover:text-kumo-default hover:bg-kumo-fill-hover p-2 my-[.05rem] cursor-pointer transition-colors no-underline relative z-10";
-const LI_ACTIVE_STYLE = "font-semibold text-kumo-default bg-kumo-fill-hover";
+  "block rounded-lg text-kumo-strong hover:text-kumo-default hover:bg-kumo-tint p-2 my-[.05rem] cursor-pointer transition-colors no-underline relative z-10";
+const LI_ACTIVE_STYLE = "font-semibold text-kumo-default bg-kumo-tint";
 
 interface SidebarNavProps {
   currentPath: string;
@@ -220,7 +220,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
         {/* Components Section */}
         <button
           type="button"
-          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-fill-hover"
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-tint"
           onClick={() => setComponentsOpen(!componentsOpen)}
         >
           <span>Components</span>
@@ -259,7 +259,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
       <div className="mb-4">
         <button
           type="button"
-          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-fill-hover"
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-tint"
           onClick={() => setChartsOpen(!chartsOpen)}
         >
           <span>Charts</span>
@@ -298,7 +298,7 @@ export function SidebarNav({ currentPath }: SidebarNavProps) {
         {/* Blocks Section */}
         <button
           type="button"
-          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-fill-hover"
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-2 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-tint"
           onClick={() => setBlocksOpen(!blocksOpen)}
         >
           <span>Blocks</span>
