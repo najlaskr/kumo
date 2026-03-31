@@ -219,7 +219,7 @@ const sidebarNav = [
 // ---------------------------------------------------------------------------
 function statusBadgeVariant(
   status: Post["status"],
-): "primary" | "secondary" | "destructive" | "success" | "outline" {
+): "primary" | "secondary" | "error" | "success" | "outline" {
   switch (status) {
     case "published":
       return "success";
@@ -228,7 +228,7 @@ function statusBadgeVariant(
     case "pending":
       return "outline";
     case "trash":
-      return "destructive";
+      return "error";
   }
 }
 
