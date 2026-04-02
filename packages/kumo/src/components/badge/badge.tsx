@@ -18,19 +18,19 @@ export const KUMO_BADGE_VARIANTS = {
       description: "Secondary badge",
     },
     error: {
-      classes: "bg-kumo-danger text-kumo-danger",
+      classes: "bg-kumo-danger/60 text-kumo-danger",
       description: "Error badge",
     },
     warning: {
-      classes: "bg-kumo-warning text-kumo-warning",
+      classes: "bg-kumo-warning/70 text-kumo-warning",
       description: "Warning badge",
     },
     success: {
-      classes: "bg-kumo-success text-kumo-success",
+      classes: "bg-kumo-success/70 text-kumo-success",
       description: "Success badge",
     },
     info: {
-      classes: "bg-kumo-info text-kumo-info",
+      classes: "bg-kumo-info/70 text-kumo-info",
       description: "Info badge",
     },
     beta: {

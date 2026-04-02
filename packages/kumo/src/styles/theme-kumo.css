@@ -50,7 +50,7 @@
 
   --text-color-kumo-info: light-dark(
     var(--color-blue-800, oklch(42.4% 0.199 265.638)),
-    var(--color-blue-200, oklch(88.2% 0.059 254.128))
+    var(--color-blue-400, oklch(70.7% 0.165 254.624))
   );
 
   --text-color-kumo-success: light-dark(
@@ -60,12 +60,12 @@
 
   --text-color-kumo-danger: light-dark(
     var(--color-red-800, oklch(44.4% 0.177 26.899)),
-    var(--color-red-200, oklch(88.5% 0.062 18.334))
+    var(--color-red-400, oklch(70.4% 0.191 22.216))
   );
 
   --text-color-kumo-warning: light-dark(
     var(--color-yellow-800, oklch(47.6% 0.114 61.907)),
-    var(--color-yellow-200, oklch(94.5% 0.129 101.54))
+    var(--color-yellow-400, oklch(85.2% 0.199 91.936))
   );
 
   --text-color-kumo-badge-orange-subtle: light-dark(
@@ -198,7 +198,7 @@
 
   --color-kumo-warning: light-dark(
     var(--color-yellow-100, oklch(97.3% 0.071 103.193)),
-    var(--color-yellow-900, oklch(42.1% 0.095 57.708))
+    var(--color-yellow-700, oklch(55.4% 0.135 66.442))
   );
 
   --color-kumo-warning-tint: light-dark(
@@ -356,10 +356,10 @@
     --text-color-kumo-placeholder: var(--color-neutral-500, oklch(55.6% 0 0));
     --text-color-kumo-brand: #f6821f;
     --text-color-kumo-link: var(--color-blue-400, oklch(70.7% 0.165 254.624));
-    --text-color-kumo-info: var(--color-blue-200, oklch(88.2% 0.059 254.128));
+    --text-color-kumo-info: var(--color-blue-400, oklch(70.7% 0.165 254.624));
     --text-color-kumo-success: var(--color-emerald-200, oklch(90.5% 0.093 164.15));
-    --text-color-kumo-danger: var(--color-red-200, oklch(88.5% 0.062 18.334));
-    --text-color-kumo-warning: var(--color-yellow-200, oklch(94.5% 0.129 101.54));
+    --text-color-kumo-danger: var(--color-red-400, oklch(70.4% 0.191 22.216));
+    --text-color-kumo-warning: var(--color-yellow-400, oklch(85.2% 0.199 91.936));
     --text-color-kumo-badge-orange-subtle: var(--color-orange-200, oklch(90.1% 0.076 70.697));
     --text-color-kumo-badge-teal-subtle: var(--color-teal-200, oklch(91% 0.096 180.426));
     --text-color-kumo-badge-neutral-subtle: var(--color-neutral-200, oklch(92.2% 0 0));
@@ -385,7 +385,7 @@
     --color-kumo-tip-stroke: var(--color-neutral-800, oklch(26.9% 0 0));
     --color-kumo-info: var(--color-blue-900, oklch(37.9% 0.146 265.522));
     --color-kumo-info-tint: var(--color-blue-900, oklch(37.9% 0.146 265.522));
-    --color-kumo-warning: var(--color-yellow-900, oklch(42.1% 0.095 57.708));
+    --color-kumo-warning: var(--color-yellow-700, oklch(55.4% 0.135 66.442));
     --color-kumo-warning-tint: var(--color-yellow-900, oklch(42.1% 0.095 57.708));
     --color-kumo-danger: var(--color-red-900, oklch(39.6% 0.141 25.723));
     --color-kumo-danger-tint: var(--color-red-900, oklch(39.6% 0.141 25.723));
