@@ -249,7 +249,7 @@ export const THEME_CONFIG: ThemeConfig = {
       theme: {
         kumo: {
           light: "var(--color-kumo-neutral-125, oklch(96% 0 0))",
-          dark: "var(--color-kumo-neutral-950, oklch(12% 0 0))",
+          dark: "var(--color-kumo-neutral-950, oklch(15% 0 0))",
         },
       },
     },
@@ -356,7 +356,7 @@ export const THEME_CONFIG: ThemeConfig = {
         },
       },
     },
-    "kumo-ring": {
+    "kumo-hairline": {
       newName: "",
       theme: {
         kumo: {
