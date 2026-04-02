@@ -49,10 +49,6 @@ export const KUMO_BADGE_VARIANTS = {
       classes: "bg-kumo-badge-red text-white",
       description: "Red badge",
     },
-    yellow: {
-      classes: "bg-kumo-badge-yellow text-white",
-      description: "Yellow badge",
-    },
     green: {
       classes: "bg-kumo-badge-green text-white",
       description: "Green badge",
@@ -62,8 +58,12 @@ export const KUMO_BADGE_VARIANTS = {
       description: "Neutral badge",
     },
     orange: {
-      classes: "bg-kumo-badge-orange text-white",
+      classes: "bg-kumo-badge-orange text-black",
       description: "Orange badge",
+    },
+    purple: {
+      classes: "bg-kumo-badge-purple text-white",
+      description: "Purple badge",
     },
     teal: {
       classes: "bg-kumo-badge-teal text-white",
@@ -81,7 +81,7 @@ export const KUMO_BADGE_VARIANTS = {
 } as const;
 
 export const KUMO_BADGE_DEFAULT_VARIANTS = {
-  variant: "secondary",
+  variant: "primary",
 } as const;
 
 // Derived types from KUMO_BADGE_VARIANTS
@@ -129,7 +129,7 @@ export interface BadgeProps {
    * - `"info"` — Info badge
    *
    * Additional token variants:
-   * - `"red"`, `"orange"`, `"yellow"`, `"green"`, `"teal"`, `"blue"`, `"neutral"`
+   * - `"red"`, `"orange"`, `"green"`, `"teal"`, `"blue"`, `"purple"`, `"neutral"`
    * - `"teal-subtle"`, `"neutral-subtle"`
    * - `"inverted"`
    * - `"outline"` — Bordered badge with transparent background

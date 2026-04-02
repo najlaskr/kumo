@@ -232,7 +232,7 @@
   );
 
   --color-kumo-badge-orange: light-dark(
-    var(--color-orange-600, oklch(64.6% 0.222 41.116)),
+    var(--color-orange-650, oklch(81.5% 0.197 76)),
     var(--color-orange-700, oklch(55.3% 0.195 38.402))
   );
 
@@ -246,13 +246,18 @@
     var(--color-yellow-700, oklch(55.4% 0.135 66.442))
   );
 
+  --color-kumo-badge-purple: light-dark(
+    var(--color-purple-600, oklch(60% 0.118 184.704)),
+    var(--color-purple-700, oklch(50.8% 0.118 165.612))
+  );
+
   --color-kumo-badge-green: light-dark(
-    var(--color-emerald-600, oklch(59.6% 0.145 163.225)),
+    var(--color-emerald-700, oklch(50.8% 0.118 165.612)),
     var(--color-emerald-700, oklch(50.8% 0.118 165.612))
   );
 
   --color-kumo-badge-teal: light-dark(
-    var(--color-teal-600, oklch(60% 0.118 184.704)),
+    var(--color-teal-650, oklch(54.9% 0.096 184.565)),
     var(--color-teal-700, oklch(51.1% 0.096 186.391))
   );
 
@@ -336,11 +341,12 @@
     --color-kumo-success: var(--color-emerald-100, oklch(95% 0.052 163.051));
     --color-kumo-success-tint: var(--color-green-300, oklch(87.1% 0.15 154.449));
     --color-kumo-badge-red: var(--color-red-600, oklch(57.7% 0.245 27.325));
-    --color-kumo-badge-orange: var(--color-orange-600, oklch(64.6% 0.222 41.116));
+    --color-kumo-badge-orange: var(--color-orange-650, oklch(81.5% 0.197 76));
     --color-kumo-badge-orange-subtle: var(--color-orange-100, oklch(95.4% 0.038 75.164));
     --color-kumo-badge-yellow: var(--color-yellow-600, oklch(68.1% 0.162 75.834));
-    --color-kumo-badge-green: var(--color-emerald-600, oklch(59.6% 0.145 163.225));
-    --color-kumo-badge-teal: var(--color-teal-600, oklch(60% 0.118 184.704));
+    --color-kumo-badge-purple: var(--color-purple-600, oklch(60% 0.118 184.704));
+    --color-kumo-badge-green: var(--color-emerald-700, oklch(50.8% 0.118 165.612));
+    --color-kumo-badge-teal: var(--color-teal-650, oklch(54.9% 0.096 184.565));
     --color-kumo-badge-teal-subtle: var(--color-teal-100, oklch(95.3% 0.051 180.801));
     --color-kumo-badge-blue: var(--color-blue-600, oklch(54.6% 0.245 262.881));
     --color-kumo-badge-neutral: var(--color-neutral-600, oklch(43.9% 0 0));
@@ -395,6 +401,7 @@
     --color-kumo-badge-orange: var(--color-orange-700, oklch(55.3% 0.195 38.402));
     --color-kumo-badge-orange-subtle: var(--color-orange-900, oklch(40.8% 0.123 38.172));
     --color-kumo-badge-yellow: var(--color-yellow-700, oklch(55.4% 0.135 66.442));
+    --color-kumo-badge-purple: var(--color-purple-700, oklch(50.8% 0.118 165.612));
     --color-kumo-badge-green: var(--color-emerald-700, oklch(50.8% 0.118 165.612));
     --color-kumo-badge-teal: var(--color-teal-700, oklch(51.1% 0.096 186.391));
     --color-kumo-badge-teal-subtle: var(--color-teal-900, oklch(38.6% 0.063 188.416));
