@@ -56,8 +56,7 @@ import {
 <ComponentSection>
   <Heading level={2}>Usage</Heading>
 
-```tsx
-import { Select } from "@cloudflare/kumo";
+<CodeBlock code={`import { Select } from "@cloudflare/kumo";
 
 export default function Example() {
   const [value, setValue] = useState("apple");
@@ -70,8 +69,7 @@ export default function Example() {
       items={{ apple: "Apple", banana: "Banana", cherry: "Cherry" }}
     />
   );
-}
-```
+}`} lang="tsx" />
 
 </ComponentSection>
 
@@ -183,8 +181,8 @@ export default function Example() {
   <strong>isItemEqualToValue</strong> prop.
 </p>
 
-```tsx
-<Select
+<CodeBlock
+  code={`<Select
   className="w-[200px]"
   renderValue={(v) => (
     <span>
@@ -201,8 +199,9 @@ export default function Example() {
       {language.emoji} {language.label}
     </Select.Option>
   ))}
-</Select>
-```
+</Select>`}
+  lang="tsx"
+/>
 
 </ComponentSection>
 
