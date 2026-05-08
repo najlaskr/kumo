@@ -6,7 +6,8 @@ import { cn } from "../../utils/cn";
 import { buttonVariants } from "../button";
 import { KUMO_INPUT_VARIANTS, type KumoInputSize } from "../input/input";
 import { SkeletonLine } from "../loader";
-import { Field, type FieldErrorMatch } from "../field/field";
+import { Label } from "../label";
+import type { FieldErrorMatch } from "../field/field";
 import {
   usePortalContainer,
   type PortalContainer,
@@ -280,8 +281,7 @@ export interface SelectProps {
   /** Size of the select trigger. Matches Input component sizes. */
   size?: KumoSelectSize;
   /**
-   * Label content for the select.
-   * When provided, enables the Field wrapper with a visible label above the select.
+   * Label content for the select. Rendered above the trigger.
    * For accessibility without a visible label, use `aria-label` instead.
    */
   label?: ReactNode;
@@ -333,7 +333,7 @@ export interface SelectOptionProps {
 
 /**
  * Dropdown for selecting a value from a list of options.
- * Wraps Base UI Select with Kumo styling and optional Field integration.
+ * Wraps Base UI Select with Kumo styling.
  *
  * @example
  * ```tsx
@@ -360,6 +360,8 @@ export function Select<T, Multiple extends boolean | undefined = false>({
   ...props
 }: SelectPropsGeneric<T, Multiple> & { required?: boolean }) {
   const labelId = useId();
+  const descriptionId = useId();
+  const errorId = useId();
   const contextContainer = usePortalContainer();
   const container = containerProp ?? contextContainer ?? undefined;
   const propLookup = props as Record<string, unknown>;
@@ -378,14 +380,10 @@ export function Select<T, Multiple extends boolean | undefined = false>({
     );
   }
 
-  // New behavior: label presence determines Field wrapper visibility (like Input)
-  // hideLabel is only respected for backward compatibility when explicitly set to true
-  const useFieldWrapper = label && hideLabel !== true;
-  const triggerLabelledBy = useFieldWrapper
-    ? undefined
-    : (ariaLabelledby ?? (label ? labelId : undefined));
+  const triggerLabelledBy =
+    ariaLabelledby ?? (label ? labelId : undefined);
   const triggerAriaLabel =
-    ariaLabel ?? (!triggerLabelledBy ? fallbackLabel : undefined);
+    ariaLabel ?? (!label ? fallbackLabel : undefined);
 
   // Normalize items to array format for Base UI compatibility
   // This fixes placeholder not showing with object map items
@@ -417,7 +415,60 @@ export function Select<T, Multiple extends boolean | undefined = false>({
     : undefined;
 
   // Exclude Kumo-extended `items` from Base UI spread — we pass `normalizedItems` instead
+  // Strip out the high-level items API; we pass Base UI the normalized array instead.
   const { items: _items, ...baseProps } = props;
+
+  /**
+   * Recreate the Field wrapper's accessibility wiring inline—error normalization, helper toggling,
+   * and aria links since Select is now using the Select.Label from Base UI and no longer mounts
+   * Field around the control.
+   */
+
+  // Resolve the error message once so we can reuse it for aria-invalid and helper text.
+  const resolvedError = error
+    ? typeof error === "string"
+      ? error
+      : error.message
+    : null;
+
+  // Only surface helper copy when there isn't an error message showing.
+  const helperDescription = !resolvedError && description ? description : null;
+
+  // Build the aria-describedby string that points to helper or error content.
+  const describedBy = [
+    helperDescription ? descriptionId : null,
+    resolvedError ? errorId : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  // Avoid empty aria-describedby attributes when there's nothing to announce.
+  const describedByAttr = describedBy.length > 0 ? describedBy : undefined;
+
+  // Select shows "(optional)" when required is explicitly false (matches Input).
+  const showOptional = required === false;
+
+  /**
+   * Wrap the visual label in Base UI's context-aware label so we get
+   * accessible naming without native <label> hover/focus coupling.
+   */
+  const labelNode = label ? (
+    <SelectBase.Label
+      className={cn(
+        "text-base font-medium text-kumo-default",
+        hideLabel && "sr-only",
+      )}
+    >
+      <Label
+        id={labelId}
+        showOptional={showOptional}
+        tooltip={!hideLabel ? labelTooltip : undefined}
+        asContent
+      >
+        {label}
+      </Label>
+    </SelectBase.Label>
+  ) : null;
 
   const selectControl = (
     <SelectBase.Root
@@ -425,6 +476,7 @@ export function Select<T, Multiple extends boolean | undefined = false>({
       items={normalizedItems}
       disabled={loading || props.disabled}
     >
+      {labelNode}
       <SelectBase.Trigger
         className={cn(
           selectVariants({ size }),
@@ -433,6 +485,8 @@ export function Select<T, Multiple extends boolean | undefined = false>({
         )}
         aria-label={triggerAriaLabel}
         aria-labelledby={triggerLabelledBy}
+        aria-describedby={describedByAttr}
+        aria-invalid={resolvedError ? true : undefined}
       >
         {loading ? (
           <SkeletonLine className="w-32" />
@@ -478,55 +532,21 @@ export function Select<T, Multiple extends boolean | undefined = false>({
       </SelectBase.Portal>
     </SelectBase.Root>
   );
-
-  // Use Field wrapper when label is provided and not hidden
-  if (useFieldWrapper) {
-    return (
-      <Field
-        label={label}
-        required={required}
-        labelTooltip={labelTooltip}
-        description={description}
-        error={
-          error
-            ? typeof error === "string"
-              ? { message: error, match: true }
-              : error
-            : undefined
-        }
-      >
-        {selectControl}
-      </Field>
-    );
-  }
-
-  // Render with standalone label when label is hidden (sr-only)
-  // Still show description/error for accessibility and UX
-  const normalizedError = error
-    ? typeof error === "string"
-      ? { message: error, match: true as const }
-      : error
-    : undefined;
-
   return (
     <div className="grid gap-2">
-      {label && (
-        <span id={labelId} className="sr-only">
-          {label}
-        </span>
-      )}
       {selectControl}
-      {normalizedError ? (
-        <span className="text-sm text-kumo-danger">
-          {normalizedError.message}
-        </span>
-      ) : (
-        description && (
-          <span className="text-sm leading-snug text-kumo-subtle">
-            {description}
-          </span>
-        )
-      )}
+      {resolvedError ? (
+        <div id={errorId} className="text-sm leading-snug text-kumo-danger">
+          {resolvedError}
+        </div>
+      ) : helperDescription ? (
+        <div
+          id={descriptionId}
+          className="text-sm leading-snug text-kumo-subtle"
+        >
+          {helperDescription}
+        </div>
+      ) : null}
     </div>
   );
 }

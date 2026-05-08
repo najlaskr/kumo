@@ -50,6 +50,8 @@ export interface LabelProps extends KumoLabelVariantsProps {
   className?: string;
   /** The id of the form element this label is associated with */
   htmlFor?: string;
+  /** Optional id so other components can reference this label directly. */
+  id?: string;
   /**
    * When true, only renders the inline content (indicators, tooltip) without
    * the outer label element with font styling. Useful when composed inside another
@@ -90,6 +92,7 @@ export function Label({
   tooltip,
   className,
   htmlFor,
+  id,
   asContent = false,
 }: LabelProps) {
   const content = (
@@ -119,13 +122,16 @@ export function Label({
   // When used as content inside another styled element, just render inline
   if (asContent) {
     return (
-      <span className={cn(labelContentVariants(), className)}>{content}</span>
+      <span id={id} className={cn(labelContentVariants(), className)}>
+        {content}
+      </span>
     );
   }
 
   // When used standalone, render as <label> for accessibility
   return (
     <label
+      id={id}
       htmlFor={htmlFor}
       className={cn(labelVariants(), labelContentVariants(), className)}
     >

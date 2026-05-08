@@ -91,8 +91,9 @@ export default function Example() {
 <p>
   A select with a visible label. When you provide the{" "}
   <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">label</code> prop,
-  the select automatically renders inside a Field wrapper with the label
-  displayed above it.
+  the component mounts Base UI’s <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Label</code>
+  internally, so the trigger is accessible without coupling hover or focus
+  states to the text.
 </p>
 
   <ComponentExample demo="SelectBasicDemo">
@@ -138,9 +139,11 @@ export default function Example() {
 
 ### With Description and Error
 
-  <p>
-    Select integrates with the Field wrapper to show description text and validation errors.
-  </p>
+<p>
+  Description and error text are rendered directly by the Select component:
+  helper copy appears when there is no validation error, and validation
+  messages are linked to the trigger via <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">aria-describedby</code>.
+</p>
 
   <ComponentExample demo="SelectWithFieldDemo">
     <SelectWithFieldDemo client:load />
@@ -179,10 +182,16 @@ export default function Example() {
 
 ### Label with Tooltip
 
-  <p>
-    Add a tooltip icon next to the label for additional context using <code
+<p>
+  Add a tooltip icon next to the label for additional context using <code
       class="rounded bg-kumo-control px-1 py-0.5 text-sm">labelTooltip</code>.
-  </p>
+</p>
+
+<p class="mt-2 text-sm text-kumo-subtle">
+  Under the hood the tooltip sits inside <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Label</code>,
+  so the trigger continues to be labelled correctly while the icon remains
+  outside of the hover/focus hit area.
+</p>
 
   <ComponentExample demo="SelectWithTooltipDemo">
     <SelectWithTooltipDemo client:load />
@@ -403,6 +412,13 @@ export default function Example() {
 
   <PropsTable component="Select" />
 
+### Select.Label
+
+<p>
+  Mounts a context-aware label inside the select. Use when composing the
+  compound API manually; the top-level <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">label</code> prop renders it automatically.
+</p>
+
 ### Select.Option
 
 <PropsTable component="Select.Option" />
@@ -410,24 +426,23 @@ export default function Example() {
 ### Select.Group
 
 <p>
-  Groups related options together with an accessible{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">role="group"</code>.
-  Use with{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">
-    Select.GroupLabel
-  </code>{" "}
-  to provide a visible heading.
+  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Group</code> wraps a
+  related set of options and exposes <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">role="group"</code> for screen readers. Pair it with
+  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.GroupLabel</code> and
+  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Separator</code> when creating grouped menus.
 </p>
 
 ### Select.GroupLabel
 
 <p>
-  A visible heading for a{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Group</code>.
-  Automatically associated with its parent group for accessibility.
+  Displays a heading for the nearest <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Group</code> and links it via
+  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">aria-labelledby</code>.
 </p>
 
 ### Select.Separator
 
-  <p>A visual divider line between option groups. Renders with <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">role="separator"</code>.</p>
+  <p>
+    A visual divider line between option groups. Renders with
+    <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">role="separator"</code>.
+  </p>
 </ComponentSection>
