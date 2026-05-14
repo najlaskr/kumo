@@ -83,27 +83,68 @@ export const KUMO_BADGE_VARIANTS = {
       description: "Blue badge",
     },
   },
+  style: {
+    filled: {
+      classes: "",
+      description: "Filled badge with background color (default)",
+    },
+    dot: {
+      classes:
+        "gap-1.5 bg-transparent text-kumo-default ring ring-kumo-line",
+      description:
+        "Outlined badge with a colored circle dot and ring color indicating status",
+    },
+  },
 } as const;
 
 export const KUMO_BADGE_DEFAULT_VARIANTS = {
   variant: "primary",
+  style: "filled",
 } as const;
+
+/**
+ * Dot color classes for the `style="dot"` variant.
+ * Keyed by the subset of `variant` values that support the dot style.
+ */
+const KUMO_BADGE_DOT_COLORS = {
+  success: "bg-kumo-success",
+  warning: "bg-kumo-warning",
+  error: "bg-kumo-badge-red",
+} as const;
+
+/** Variants that support the `style="dot"` treatment. */
+export type KumoBadgeDotVariant = keyof typeof KUMO_BADGE_DOT_COLORS;
 
 // Derived types from KUMO_BADGE_VARIANTS
 export type KumoBadgeVariant = keyof typeof KUMO_BADGE_VARIANTS.variant;
+export type KumoBadgeStyle = keyof typeof KUMO_BADGE_VARIANTS.style;
 
 export interface KumoBadgeVariantsProps {
   variant?: KumoBadgeVariant;
+  style?: KumoBadgeStyle;
 }
 
 export function badgeVariants({
   variant = KUMO_BADGE_DEFAULT_VARIANTS.variant,
+  style = KUMO_BADGE_DEFAULT_VARIANTS.style,
 }: KumoBadgeVariantsProps = {}) {
+  const variantClasses = resolveVariant(
+    KUMO_BADGE_VARIANTS.variant,
+    variant,
+    KUMO_BADGE_DEFAULT_VARIANTS.variant,
+  ).classes;
+  const styleClasses = resolveVariant(
+    KUMO_BADGE_VARIANTS.style,
+    style,
+    KUMO_BADGE_DEFAULT_VARIANTS.style,
+  ).classes;
   return cn(
     // Base styles (exported as KUMO_BADGE_BASE_STYLES for Figma plugin)
     KUMO_BADGE_BASE_STYLES,
-    // Apply variant styles from KUMO_BADGE_VARIANTS (fallback to primary if variant not found)
-    resolveVariant(KUMO_BADGE_VARIANTS.variant, variant, KUMO_BADGE_DEFAULT_VARIANTS.variant).classes,
+    // The dot style overrides background/text colors from the variant,
+    // so only apply variant classes when we're not in dot mode.
+    style === "dot" ? "" : variantClasses,
+    styleClasses,
   );
 }
 
@@ -118,6 +159,7 @@ export type BadgeVariant = KumoBadgeVariant;
  * <Badge variant="green">Active</Badge>
  * <Badge variant="red">Error</Badge>
  * <Badge variant="neutral">Inactive</Badge>
+ * <Badge variant="success" style="dot">Healthy</Badge>
  * ```
  */
 export interface BadgeProps {
@@ -137,9 +179,18 @@ export interface BadgeProps {
    * - `"inverted"`
    * - `"outline"` — Bordered badge with transparent background
    * - `"beta"` — Dashed-border badge for beta/experimental features
-   * @default "secondary"
+   * @default "primary"
    */
   variant?: KumoBadgeVariant;
+  /**
+   * Visual style of the badge.
+   * - `"filled"` — Filled background using the variant color (default)
+   * - `"dot"` — Outlined badge with a colored circle dot. Only `success`,
+   *   `warning`, and `error` variants are supported; in these cases the ring
+   *   also tints to match. Other variants render the badge without a dot.
+   * @default "filled"
+   */
+  style?: KumoBadgeStyle;
   /** Additional CSS classes merged via `cn()`. */
   className?: string;
   /** Content rendered inside the badge. */
@@ -152,15 +203,29 @@ export interface BadgeProps {
  * @example
  * ```tsx
  * <Badge variant="green">Active</Badge>
+ * <Badge variant="success" style="dot">Healthy</Badge>
  * ```
  */
 export function Badge({
   variant = KUMO_BADGE_DEFAULT_VARIANTS.variant,
+  style = KUMO_BADGE_DEFAULT_VARIANTS.style,
   className,
   children,
 }: BadgeProps) {
+  const isDotVariant = style === "dot" && variant in KUMO_BADGE_DOT_COLORS;
+
+  const dotColor = isDotVariant
+    ? KUMO_BADGE_DOT_COLORS[variant as KumoBadgeDotVariant]
+    : undefined;
+
   return (
-    <span className={cn(badgeVariants({ variant }), className)}>
+    <span className={cn(badgeVariants({ variant, style }), className)}>
+      {dotColor ? (
+        <span
+          aria-hidden="true"
+          className={cn("size-1.75 rounded-full", dotColor)}
+        />
+      ) : null}
       {children}
     </span>
   );

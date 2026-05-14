@@ -37,3 +37,13 @@ export function BadgeInSentenceDemo() {
     </p>
   );
 }
+
+export function BadgeDotDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Badge variant="success" style="dot">Healthy</Badge>
+      <Badge variant="warning" style="dot">Warning</Badge>
+      <Badge variant="error" style="dot">Error</Badge>
+    </div>
+  );
+}
