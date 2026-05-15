@@ -91,8 +91,7 @@ export const KUMO_BADGE_VARIANTS = {
     dot: {
       classes:
         "gap-1.5 bg-transparent text-kumo-default ring ring-kumo-line",
-      description:
-        "Outlined badge with a colored circle dot and ring color indicating status",
+      description: "Outlined badge with a colored circle dot indicating status",
     },
   },
 } as const;
@@ -103,17 +102,19 @@ export const KUMO_BADGE_DEFAULT_VARIANTS = {
 } as const;
 
 /**
- * Dot color classes for the `style="dot"` variant.
- * Keyed by the subset of `variant` values that support the dot style.
+ * Dot color classes for the `style="dot"` variant, keyed by the subset of
+ * `variant` values that support the dot style. Shaped like KUMO_BADGE_VARIANTS
+ * entries so it can be accessed via `resolveVariant` for crash-safe lookups.
+ *
+ * The `"none"` fallback is used when `style="dot"` is paired with a variant
+ * that doesn't have a dot color — it renders no dot rather than crashing.
  */
 const KUMO_BADGE_DOT_COLORS = {
-  success: "bg-kumo-success",
-  warning: "bg-kumo-warning",
-  error: "bg-kumo-badge-red",
+  none: { classes: "" },
+  success: { classes: "bg-kumo-success" },
+  warning: { classes: "bg-kumo-warning" },
+  error: { classes: "bg-kumo-badge-red" },
 } as const;
-
-/** Variants that support the `style="dot"` treatment. */
-export type KumoBadgeDotVariant = keyof typeof KUMO_BADGE_DOT_COLORS;
 
 // Derived types from KUMO_BADGE_VARIANTS
 export type KumoBadgeVariant = keyof typeof KUMO_BADGE_VARIANTS.variant;
@@ -212,18 +213,19 @@ export function Badge({
   className,
   children,
 }: BadgeProps) {
-  const isDotVariant = style === "dot" && variant in KUMO_BADGE_DOT_COLORS;
-
-  const dotColor = isDotVariant
-    ? KUMO_BADGE_DOT_COLORS[variant as KumoBadgeDotVariant]
-    : undefined;
+  // Crash-safe dot-color lookup. Same pattern as variant/style resolution above:
+  // unknown variants fall back to "none" (no dot) instead of throwing.
+  const dotColor =
+    style === "dot"
+      ? resolveVariant(KUMO_BADGE_DOT_COLORS, variant, "none").classes
+      : "";
 
   return (
     <span className={cn(badgeVariants({ variant, style }), className)}>
       {dotColor ? (
         <span
           aria-hidden="true"
-          className={cn("size-1.75 rounded-full", dotColor)}
+          className={cn("size-1.75 rounded-full shrink-0", dotColor)}
         />
       ) : null}
       {children}
