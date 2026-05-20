@@ -90,7 +90,7 @@ export const KUMO_BADGE_VARIANTS = {
     },
     dot: {
       classes:
-        "gap-1.5 bg-transparent text-kumo-default ring ring-kumo-line",
+        "gap-1.5 bg-transparent text-kumo-default ring ring-kumo-hairline",
       description: "Outlined badge with a colored circle dot indicating status",
     },
   },
@@ -111,9 +111,10 @@ export const KUMO_BADGE_DEFAULT_VARIANTS = {
  */
 const KUMO_BADGE_DOT_COLORS = {
   none: { classes: "" },
-  success: { classes: "bg-kumo-success" },
-  warning: { classes: "bg-kumo-warning" },
+  success: { classes: "bg-kumo-badge-green" },
+  warning: { classes: "bg-kumo-badge-orange" },
   error: { classes: "bg-kumo-badge-red" },
+  neutral: { classes: "bg-kumo-badge-neutral" },
 } as const;
 
 // Derived types from KUMO_BADGE_VARIANTS
