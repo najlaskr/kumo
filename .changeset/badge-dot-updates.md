@@ -1,5 +1,5 @@
 ---
-"@cloudflare/kumo": patch
+"@cloudflare/kumo": minor
 "@cloudflare/kumo-docs-astro": patch
 ---
 
