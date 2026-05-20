@@ -83,7 +83,7 @@ export const KUMO_BADGE_VARIANTS = {
       description: "Blue badge",
     },
   },
-  style: {
+  appearance: {
     filled: {
       classes: "",
       description: "Filled badge with background color (default)",
@@ -94,59 +94,67 @@ export const KUMO_BADGE_VARIANTS = {
       description: "Outlined badge with a colored circle dot indicating status",
     },
   },
+  dotColor: {
+    none: {
+      classes: "",
+      description: "No dot indicator (used when appearance is not dot, or variant has no dot color)",
+    },
+    success: {
+      classes: "bg-kumo-badge-green",
+      description: "Green dot for success status",
+    },
+    warning: {
+      classes: "bg-kumo-badge-orange",
+      description: "Orange dot for warning status",
+    },
+    error: {
+      classes: "bg-kumo-badge-red",
+      description: "Red dot for error status",
+    },
+    neutral: {
+      classes: "bg-kumo-badge-neutral",
+      description: "Neutral dot for informational status",
+    },
+  },
 } as const;
 
 export const KUMO_BADGE_DEFAULT_VARIANTS = {
   variant: "primary",
-  style: "filled",
-} as const;
-
-/**
- * Dot color classes for the `style="dot"` variant, keyed by the subset of
- * `variant` values that support the dot style. Shaped like KUMO_BADGE_VARIANTS
- * entries so it can be accessed via `resolveVariant` for crash-safe lookups.
- *
- * The `"none"` fallback is used when `style="dot"` is paired with a variant
- * that doesn't have a dot color — it renders no dot rather than crashing.
- */
-const KUMO_BADGE_DOT_COLORS = {
-  none: { classes: "" },
-  success: { classes: "bg-kumo-badge-green" },
-  warning: { classes: "bg-kumo-badge-orange" },
-  error: { classes: "bg-kumo-badge-red" },
-  neutral: { classes: "bg-kumo-badge-neutral" },
+  appearance: "filled",
+  dotColor: "none",
 } as const;
 
 // Derived types from KUMO_BADGE_VARIANTS
 export type KumoBadgeVariant = keyof typeof KUMO_BADGE_VARIANTS.variant;
-export type KumoBadgeStyle = keyof typeof KUMO_BADGE_VARIANTS.style;
+export type KumoBadgeAppearance = keyof typeof KUMO_BADGE_VARIANTS.appearance;
+export type KumoBadgeDotColor = keyof typeof KUMO_BADGE_VARIANTS.dotColor;
 
 export interface KumoBadgeVariantsProps {
   variant?: KumoBadgeVariant;
-  style?: KumoBadgeStyle;
+  appearance?: KumoBadgeAppearance;
 }
 
 export function badgeVariants({
   variant = KUMO_BADGE_DEFAULT_VARIANTS.variant,
-  style = KUMO_BADGE_DEFAULT_VARIANTS.style,
+  appearance = KUMO_BADGE_DEFAULT_VARIANTS.appearance,
 }: KumoBadgeVariantsProps = {}) {
   const variantClasses = resolveVariant(
     KUMO_BADGE_VARIANTS.variant,
     variant,
     KUMO_BADGE_DEFAULT_VARIANTS.variant,
   ).classes;
-  const styleClasses = resolveVariant(
-    KUMO_BADGE_VARIANTS.style,
-    style,
-    KUMO_BADGE_DEFAULT_VARIANTS.style,
+  const appearanceClasses = resolveVariant(
+    KUMO_BADGE_VARIANTS.appearance,
+    appearance,
+    KUMO_BADGE_DEFAULT_VARIANTS.appearance,
   ).classes;
   return cn(
     // Base styles (exported as KUMO_BADGE_BASE_STYLES for Figma plugin)
     KUMO_BADGE_BASE_STYLES,
-    // The dot style overrides background/text colors from the variant,
+    // The dot appearance overrides background/text colors from the variant,
     // so only apply variant classes when we're not in dot mode.
-    style === "dot" ? "" : variantClasses,
-    styleClasses,
+    appearance === "dot" ? "" : variantClasses,
+    appearanceClasses,
   );
 }
 
@@ -161,7 +169,7 @@ export type BadgeVariant = KumoBadgeVariant;
  * <Badge variant="green">Active</Badge>
  * <Badge variant="red">Error</Badge>
  * <Badge variant="neutral">Inactive</Badge>
- * <Badge variant="success" style="dot">Healthy</Badge>
+ * <Badge variant="success" appearance="dot">Healthy</Badge>
  * ```
  */
 export interface BadgeProps {
@@ -185,14 +193,14 @@ export interface BadgeProps {
    */
   variant?: KumoBadgeVariant;
   /**
-   * Visual style of the badge.
+   * Visual appearance of the badge.
    * - `"filled"` — Filled background using the variant color (default)
    * - `"dot"` — Outlined badge with a colored circle dot. Only `success`,
-   *   `warning`, and `error` variants are supported; in these cases the ring
-   *   also tints to match. Other variants render the badge without a dot.
+   *   `warning`, `error`, and `neutral` variants show a dot; other variants
+   *   render the badge without a dot.
    * @default "filled"
    */
-  style?: KumoBadgeStyle;
+  appearance?: KumoBadgeAppearance;
   /** Additional CSS classes merged via `cn()`. */
   className?: string;
   /** Content rendered inside the badge. */
@@ -205,24 +213,28 @@ export interface BadgeProps {
  * @example
  * ```tsx
  * <Badge variant="green">Active</Badge>
- * <Badge variant="success" style="dot">Healthy</Badge>
+ * <Badge variant="success" appearance="dot">Healthy</Badge>
  * ```
  */
 export function Badge({
   variant = KUMO_BADGE_DEFAULT_VARIANTS.variant,
-  style = KUMO_BADGE_DEFAULT_VARIANTS.style,
+  appearance = KUMO_BADGE_DEFAULT_VARIANTS.appearance,
   className,
   children,
 }: BadgeProps) {
-  // Crash-safe dot-color lookup. Same pattern as variant/style resolution above:
-  // unknown variants fall back to "none" (no dot) instead of throwing.
+  // Crash-safe dot-color lookup via resolveVariant — unknown variants fall
+  // back to "none" (no dot) instead of throwing.
   const dotColor =
-    style === "dot"
-      ? resolveVariant(KUMO_BADGE_DOT_COLORS, variant, "none").classes
+    appearance === "dot"
+      ? resolveVariant(
+          KUMO_BADGE_VARIANTS.dotColor,
+          variant,
+          KUMO_BADGE_DEFAULT_VARIANTS.dotColor,
+        ).classes
       : "";
 
   return (
-    <span className={cn(badgeVariants({ variant, style }), className)}>
+    <span className={cn(badgeVariants({ variant, appearance }), className)}>
       {dotColor ? (
         <span
           aria-hidden="true"

@@ -41,10 +41,10 @@ export function BadgeInSentenceDemo() {
 export function BadgeDotDemo() {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <Badge variant="success" style="dot">Healthy</Badge>
-      <Badge variant="warning" style="dot">Warning</Badge>
-      <Badge variant="error" style="dot">Error</Badge>
-      <Badge variant="neutral" style="dot">Neutral</Badge>
+      <Badge variant="success" appearance="dot">Healthy</Badge>
+      <Badge variant="warning" appearance="dot">Warning</Badge>
+      <Badge variant="error" appearance="dot">Error</Badge>
+      <Badge variant="neutral" appearance="dot">Neutral</Badge>
     </div>
   );
 }
